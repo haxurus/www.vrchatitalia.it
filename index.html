@@ -1,277 +1,283 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080b12">
-  <meta name="description" content="VRChat Italia - il punto di incontro per scoprire community, eventi e realtà italiane nel mondo di VRChat.">
-  <title>VRChat Italia</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VRChat Italia | Community Hub</title>
+  <meta name="description" content="VRChat Italia raccoglie e presenta le community italiane attive su VRChat, i loro eventi e gli scatti della community." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#090b12" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="orb orb-one" aria-hidden="true"></div>
-  <div class="orb orb-two" aria-hidden="true"></div>
-
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="VRChat Italia - Home">
-      <span class="brand-mark">VRI</span>
-      <span class="brand-copy">
-        <strong>VRChat Italia</strong>
-        <small>Community Hub</small>
-      </span>
-    </a>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="VRChat Italia - Home">
+        <span class="brand-logo" aria-hidden="true">VRI</span>
+        <span class="brand-name">VRChat Italia</span>
+      </a>
 
-    <button class="menu-toggle" type="button" aria-label="Apri il menu" aria-expanded="false">
-      <span></span>
-      <span></span>
-    </button>
+      <nav class="nav-links" aria-label="Navigazione principale">
+        <a data-nav class="is-active" href="#home">Home</a>
+        <a data-nav href="#progetto">Progetto</a>
+        <a data-nav href="#community">Community</a>
+        <a data-nav href="#gallery">Gallery</a>
+        <a data-nav href="#candidatura">Candidati</a>
+      </nav>
 
-    <nav class="main-nav" aria-label="Navigazione principale">
+      <a class="nav-cta" href="#candidatura">Aderisci al progetto</a>
+
+      <button class="menu-toggle" type="button" aria-label="Apri menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+
+    <nav class="mobile-menu" aria-label="Navigazione mobile">
+      <a href="#home">Home</a>
+      <a href="#progetto">Progetto</a>
       <a href="#community">Community</a>
-      <a href="#scopri">Scopri</a>
-      <a href="#progetto">Il progetto</a>
-      <a class="nav-cta" href="#partecipa">Segnala una community</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#candidatura">Candidati</a>
+      <a class="nav-cta" href="#candidatura">Aderisci al progetto</a>
     </nav>
   </header>
 
-  <main id="top">
-    <section class="hero section-shell">
-      <div class="hero-copy">
-        <div class="eyebrow">
-          <span class="status-dot"></span>
-          HUB ITALIANO PER VRCHAT
+  <main>
+    <section class="hero" id="home" aria-label="VRChat Italia">
+      <div class="hero-slideshow" aria-hidden="true">
+        <div class="hero-slide hero-slide--1"></div>
+        <div class="hero-slide hero-slide--2"></div>
+        <div class="hero-slide hero-slide--3"></div>
+        <div class="hero-slide hero-slide--4"></div>
+      </div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Italian VRChat Community Network</span>
+          <h1>VRChat <span>Italia</span></h1>
+          <p class="hero-lead">
+            Le community italiane di VRChat, raccolte in un unico spazio.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#community">Scopri le community</a>
+            <a class="button button-secondary" href="#candidatura">Partecipa</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-progress" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <section class="section project-section" id="progetto">
+      <div class="container project-layout">
+        <div>
+          <span class="section-kicker">Il progetto</span>
+          <h2>Un punto di incontro per la VR italiana.</h2>
+        </div>
+        <div class="project-copy">
+          <p>
+            VRChat Italia nasce per rendere più semplice scoprire le community italiane attive su VRChat,
+            conoscere nuovi gruppi e dare visibilità alle realtà che contribuiscono ogni giorno alla scena italiana.
+          </p>
+          <p class="project-note">
+            Il portale non sostituisce le singole community: le mette in contatto e le rende più facili da trovare.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section communities-section" id="community">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Community aderenti</span>
+            <h2>Trova il tuo posto.</h2>
+          </div>
+          <p>
+            Ogni community avrà una scheda dedicata con descrizione, categoria e collegamenti ufficiali.
+          </p>
         </div>
 
-        <h1>
-          Un portale per
-          <span>connettere le community italiane.</span>
-        </h1>
+        <div class="community-grid">
+          <article class="community-card">
+            <div class="community-card__media community-card__media--one">
+              <span class="community-card__badge">Social</span>
+            </div>
+            <div class="community-card__body">
+              <div class="community-logo">01</div>
+              <div>
+                <h3>Community italiana</h3>
+                <p>Socializzazione, serate ed eventi aperti alla community.</p>
+              </div>
+              <a href="#" class="community-link" aria-label="Apri la community italiana">Scopri <span>↗</span></a>
+            </div>
+          </article>
 
-        <p class="hero-lead">
-          Scopri gruppi, eventi, mondi e progetti italiani attivi su VRChat.
-          Un unico punto di accesso per orientarsi, incontrarsi e creare nuove connessioni.
-        </p>
+          <article class="community-card">
+            <div class="community-card__media community-card__media--two">
+              <span class="community-card__badge">Roleplay</span>
+            </div>
+            <div class="community-card__body">
+              <div class="community-logo">02</div>
+              <div>
+                <h3>Roleplay Italia</h3>
+                <p>Ambientazioni, personaggi e sessioni narrative in VRChat.</p>
+              </div>
+              <a href="#" class="community-link" aria-label="Apri Roleplay Italia">Scopri <span>↗</span></a>
+            </div>
+          </article>
 
-        <div class="hero-actions">
-          <a class="button button-primary" href="#community">
-            Esplora le community
-            <span aria-hidden="true">↗</span>
+          <article class="community-card">
+            <div class="community-card__media community-card__media--three">
+              <span class="community-card__badge">Creators</span>
+            </div>
+            <div class="community-card__body">
+              <div class="community-logo">03</div>
+              <div>
+                <h3>Creators Hub</h3>
+                <p>Avatar, world building, Unity, Blender e creatività italiana.</p>
+              </div>
+              <a href="#" class="community-link" aria-label="Apri Creators Hub">Scopri <span>↗</span></a>
+            </div>
+          </article>
+
+          <a class="community-card community-card--join" href="#candidatura">
+            <span class="join-plus">+</span>
+            <div>
+              <span class="section-kicker">La tua community</span>
+              <h3>Vuoi comparire qui?</h3>
+              <p>Consulta i requisiti e invia la candidatura.</p>
+            </div>
           </a>
-          <a class="button button-ghost" href="#partecipa">Aggiungi la tua</a>
-        </div>
-
-        <div class="hero-meta" aria-label="Caratteristiche del progetto">
-          <span><b>01</b> Community</span>
-          <span><b>02</b> Eventi</span>
-          <span><b>03</b> Creators</span>
-          <span><b>04</b> Worlds</span>
-        </div>
-      </div>
-
-      <div class="hero-visual" aria-label="Anteprima visuale del portale">
-        <div class="portal-ring portal-ring-a"></div>
-        <div class="portal-ring portal-ring-b"></div>
-
-        <div class="interface-card interface-main">
-          <div class="interface-top">
-            <div>
-              <span class="micro-label">DISCOVERY NODE</span>
-              <h2>Italia / Online</h2>
-            </div>
-            <span class="live-badge">LIVE</span>
-          </div>
-
-          <div class="radar">
-            <span class="radar-grid"></span>
-            <span class="radar-core">IT</span>
-            <span class="radar-point point-a"></span>
-            <span class="radar-point point-b"></span>
-            <span class="radar-point point-c"></span>
-            <span class="radar-point point-d"></span>
-          </div>
-
-          <div class="interface-stats">
-            <div>
-              <small>NETWORK</small>
-              <strong>COMMUNITY</strong>
-            </div>
-            <div>
-              <small>STATUS</small>
-              <strong>OPEN</strong>
-            </div>
-            <div>
-              <small>MODE</small>
-              <strong>SOCIAL</strong>
-            </div>
-          </div>
-        </div>
-
-        <div class="floating-card floating-one">
-          <span class="floating-icon">◎</span>
-          <div>
-            <small>DISCOVER</small>
-            <strong>Nuove realtà</strong>
-          </div>
-        </div>
-
-        <div class="floating-card floating-two">
-          <span class="floating-icon">◇</span>
-          <div>
-            <small>CONNECT</small>
-            <strong>Eventi italiani</strong>
-          </div>
         </div>
       </div>
     </section>
 
-    <section class="ticker" aria-label="Categorie">
-      <div class="ticker-track">
-        <span>SOCIAL HUBS</span><i>+</i>
-        <span>ROLEPLAY</span><i>+</i>
-        <span>EVENTI</span><i>+</i>
-        <span>CREATORS</span><i>+</i>
-        <span>WORLD BUILDING</span><i>+</i>
-        <span>CLUBBING</span><i>+</i>
-        <span>SOCIAL HUBS</span><i>+</i>
-        <span>ROLEPLAY</span><i>+</i>
-        <span>EVENTI</span><i>+</i>
+    <section class="section gallery-section" id="gallery">
+      <div class="container gallery-heading">
+        <span class="section-kicker">Community shots</span>
+        <h2>Momenti dal mondo virtuale.</h2>
+        <p>Una selezione di scatti inviati dagli utenti delle community aderenti.</p>
+      </div>
+
+      <div class="photo-marquee" aria-label="Galleria di immagini delle community">
+        <div class="photo-track photo-track--left">
+          <div class="shot shot--1"><span>@community</span></div>
+          <div class="shot shot--2"><span>@community</span></div>
+          <div class="shot shot--3"><span>@community</span></div>
+          <div class="shot shot--4"><span>@community</span></div>
+          <div class="shot shot--5"><span>@community</span></div>
+          <div class="shot shot--6"><span>@community</span></div>
+
+          <div class="shot shot--1" aria-hidden="true"><span>@community</span></div>
+          <div class="shot shot--2" aria-hidden="true"><span>@community</span></div>
+          <div class="shot shot--3" aria-hidden="true"><span>@community</span></div>
+          <div class="shot shot--4" aria-hidden="true"><span>@community</span></div>
+          <div class="shot shot--5" aria-hidden="true"><span>@community</span></div>
+          <div class="shot shot--6" aria-hidden="true"><span>@community</span></div>
+        </div>
+      </div>
+
+      <div class="photo-marquee photo-marquee--secondary" aria-hidden="true">
+        <div class="photo-track photo-track--right">
+          <div class="shot shot--7"><span>@community</span></div>
+          <div class="shot shot--8"><span>@community</span></div>
+          <div class="shot shot--9"><span>@community</span></div>
+          <div class="shot shot--10"><span>@community</span></div>
+          <div class="shot shot--11"><span>@community</span></div>
+          <div class="shot shot--12"><span>@community</span></div>
+
+          <div class="shot shot--7"><span>@community</span></div>
+          <div class="shot shot--8"><span>@community</span></div>
+          <div class="shot shot--9"><span>@community</span></div>
+          <div class="shot shot--10"><span>@community</span></div>
+          <div class="shot shot--11"><span>@community</span></div>
+          <div class="shot shot--12"><span>@community</span></div>
+        </div>
       </div>
     </section>
 
-    <section class="content-section section-shell" id="community">
-      <div class="section-heading">
-        <div>
-          <span class="section-kicker">COMMUNITY DIRECTORY</span>
-          <h2>Trova il tuo spazio.</h2>
-        </div>
-        <p>
-          Una vetrina ordinata delle realtà italiane presenti su VRChat.
-          Le card qui sotto sono placeholder e verranno sostituite con le community reali.
-        </p>
-      </div>
+    <section class="section application-section" id="candidatura">
+      <div class="container">
+        <div class="application-panel">
+          <div class="application-intro">
+            <span class="section-kicker">Aderisci a VRChat Italia</span>
+            <h2>Porta la tua community nel network.</h2>
+            <p>
+              Per mantenere il progetto utile e ordinato, le realtà che desiderano aderire dovranno rispettare alcuni requisiti di base.
+            </p>
+          </div>
 
-      <div class="community-grid">
-        <article class="community-card featured-card">
-          <div class="card-number">01</div>
-          <div class="card-tags">
-            <span>Social</span>
-            <span>Events</span>
-          </div>
-          <div class="community-icon">V</div>
-          <div class="community-copy">
-            <small>COMMUNITY PLACEHOLDER</small>
-            <h3>Community italiana</h3>
-            <p>Spazio dedicato a socializzazione, eventi e attività in VRChat.</p>
-          </div>
-          <a href="#partecipa" aria-label="Apri la community">Scopri <span>↗</span></a>
-        </article>
-
-        <article class="community-card">
-          <div class="card-number">02</div>
-          <div class="card-tags">
-            <span>Roleplay</span>
-          </div>
-          <div class="community-icon alt-icon">R</div>
-          <div class="community-copy">
-            <small>COMMUNITY PLACEHOLDER</small>
-            <h3>Roleplay Italia</h3>
-            <p>Una realtà dedicata a sessioni, ambientazioni e storytelling condiviso.</p>
-          </div>
-          <a href="#partecipa" aria-label="Apri la community">Scopri <span>↗</span></a>
-        </article>
-
-        <article class="community-card">
-          <div class="card-number">03</div>
-          <div class="card-tags">
-            <span>Creators</span>
-            <span>Worlds</span>
-          </div>
-          <div class="community-icon creator-icon">C</div>
-          <div class="community-copy">
-            <small>COMMUNITY PLACEHOLDER</small>
-            <h3>Creators Hub</h3>
-            <p>Avatar, world building, Unity, Blender e creatività made in Italy.</p>
-          </div>
-          <a href="#partecipa" aria-label="Apri la community">Scopri <span>↗</span></a>
-        </article>
-      </div>
-    </section>
-
-    <section class="content-section section-shell" id="scopri">
-      <div class="split-layout">
-        <div class="split-copy">
-          <span class="section-kicker">ONE HUB / MANY WORLDS</span>
-          <h2>Non solo una lista di server.</h2>
-          <p>
-            L'idea è creare una vera mappa dell'ecosistema italiano su VRChat,
-            con profili delle community, eventi, link ufficiali, categorie e contenuti utili.
-          </p>
-        </div>
-
-        <div class="feature-list">
-          <article>
-            <span>01</span>
-            <div>
-              <h3>Directory community</h3>
-              <p>Schede chiare, filtri e categorie per trovare rapidamente la realtà più adatta.</p>
+          <div class="requirements">
+            <div class="requirement">
+              <span>01</span>
+              <div>
+                <strong>Community italiana</strong>
+                <p>La community deve essere rivolta principalmente a utenti italiani o avere una presenza italiana significativa.</p>
+              </div>
             </div>
-          </article>
-          <article>
-            <span>02</span>
-            <div>
-              <h3>Eventi e appuntamenti</h3>
-              <p>Una sezione dedicata agli eventi pubblici delle community italiane.</p>
+            <div class="requirement">
+              <span>02</span>
+              <div>
+                <strong>Presenza attiva su VRChat</strong>
+                <p>Deve svolgere attività, eventi, incontri o progetti direttamente collegati a VRChat.</p>
+              </div>
             </div>
-          </article>
-          <article>
-            <span>03</span>
-            <div>
-              <h3>Creators e mondi</h3>
-              <p>Spazio per valorizzare chi crea avatar, asset, world e contenuti per VRChat.</p>
+            <div class="requirement">
+              <span>03</span>
+              <div>
+                <strong>Contatti verificabili</strong>
+                <p>Devono essere disponibili almeno un referente e uno spazio ufficiale pubblico o verificabile.</p>
+              </div>
             </div>
-          </article>
-        </div>
-      </div>
-    </section>
+            <div class="requirement">
+              <span>04</span>
+              <div>
+                <strong>Ambiente compatibile con il progetto</strong>
+                <p>La candidatura verrà valutata prima della pubblicazione sul portale.</p>
+              </div>
+            </div>
+          </div>
 
-    <section class="content-section section-shell" id="progetto">
-      <div class="manifesto">
-        <span class="manifesto-code">VRI://ABOUT</span>
-        <p>
-          <strong>VRChat Italia</strong> nasce per dare visibilità alle community italiane
-          e rendere più semplice scoprire ciò che succede nel nostro ecosistema.
-        </p>
-        <div class="manifesto-line"></div>
-      </div>
-    </section>
-
-    <section class="cta-section section-shell" id="partecipa">
-      <div class="cta-panel">
-        <div>
-          <span class="section-kicker">JOIN THE NETWORK</span>
-          <h2>La tua community è su VRChat?</h2>
-          <p>
-            Presto potrai inviarci le informazioni della tua realtà per entrare nella directory.
-          </p>
+          <div class="application-action">
+            <div>
+              <strong>Pronto a candidare la tua community?</strong>
+              <span>Il collegamento definitivo al modulo verrà inserito qui.</span>
+            </div>
+            <a class="button button-primary button-form" href="#" aria-disabled="true">Compila il modulo ↗</a>
+          </div>
         </div>
-        <a class="button button-primary" href="mailto:info@vrchatitalia.it">
-          Segnalaci la community
-          <span aria-hidden="true">↗</span>
-        </a>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer section-shell">
-    <div class="footer-brand">
-      <span class="brand-mark">VRI</span>
-      <div>
-        <strong>VRChat Italia</strong>
-        <small>Uno spazio indipendente dedicato alla community italiana.</small>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-shell">
+        <div class="footer-brand">
+          <span class="footer-brand__title">VRChat Italia</span>
+          <p>
+            Un punto di incontro indipendente dedicato alle community italiane presenti nel mondo di VRChat.
+          </p>
+        </div>
+
+        <div class="footer-links" aria-label="Link utili">
+          <a href="#progetto">Progetto</a>
+          <a href="#community">Community</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#candidatura">Candidati</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>VRChat Italia © <span id="year">2026</span></span>
+        <span>Italian Community Network</span>
       </div>
     </div>
-    <p>© <span id="year"></span> VRChat Italia</p>
   </footer>
 
   <script src="script.js"></script>
