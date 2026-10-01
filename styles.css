@@ -222,7 +222,8 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 /* Hero */
 .hero {
   position: relative;
-  min-height: 690px;
+  min-height: calc(100vh - 74px);
+  min-height: calc(100svh - 74px);
   overflow: hidden;
   border-bottom: 1px solid var(--line);
   isolation: isolate;
@@ -306,7 +307,8 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 }
 
 .hero-inner {
-  min-height: 690px;
+  min-height: calc(100vh - 74px);
+  min-height: calc(100svh - 74px);
   display: flex;
   align-items: center;
   padding: 90px 0 120px;
@@ -369,10 +371,82 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
   gap: 12px;
 }
 
+.scroll-indicator {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255,255,255,.78);
+  opacity: 0;
+  transform: translate(-50%, 14px);
+  pointer-events: none;
+  transition: opacity .7s ease, transform .7s var(--ease);
+}
+
+.scroll-indicator.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.scroll-indicator__label {
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.scroll-indicator__mouse {
+  position: relative;
+  width: 23px;
+  height: 35px;
+  border: 1px solid rgba(255,255,255,.58);
+  border-radius: 999px;
+  background: rgba(9,11,18,.16);
+  backdrop-filter: blur(5px);
+}
+
+.scroll-indicator__mouse span {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 3px;
+  height: 6px;
+  border-radius: 999px;
+  background: #fff;
+  transform: translateX(-50%);
+  animation: scrollWheel 1.7s ease-in-out infinite;
+}
+
+.scroll-indicator__chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid rgba(255,255,255,.76);
+  border-bottom: 1px solid rgba(255,255,255,.76);
+  transform: rotate(45deg);
+  animation: scrollChevron 1.7s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  28% { opacity: 1; }
+  72% { opacity: 1; transform: translate(-50%, 10px); }
+  100% { opacity: 0; transform: translate(-50%, 12px); }
+}
+
+@keyframes scrollChevron {
+  0%, 100% { opacity: .28; transform: translateY(0) rotate(45deg); }
+  50% { opacity: 1; transform: translateY(4px) rotate(45deg); }
+}
+
 .hero-progress {
   position: absolute;
   left: 50%;
-  bottom: 32px;
+  bottom: 18px;
   width: min(calc(100% - 40px), var(--max-width));
   transform: translateX(-50%);
   display: grid;
@@ -891,6 +965,8 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
   html { scroll-behavior: auto; }
   .hero-slide,
   .hero-progress span::after,
+  .scroll-indicator__mouse span,
+  .scroll-indicator__chevron,
   .photo-track {
     animation: none !important;
   }
@@ -1025,7 +1101,8 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 
   .hero,
   .hero-inner {
-    min-height: 620px;
+    min-height: calc(100vh - 68px);
+    min-height: calc(100svh - 68px);
   }
 
   .hero-inner {
@@ -1056,8 +1133,16 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
     width: 100%;
   }
 
+  .scroll-indicator {
+    bottom: 50px;
+  }
+
+  .scroll-indicator__label {
+    display: none;
+  }
+
   .hero-progress {
-    bottom: 24px;
+    bottom: 16px;
     width: calc(100% - 28px);
   }
 
