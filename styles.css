@@ -353,7 +353,7 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 }
 
 .hero h1 span {
-  display: block;
+  display: inline;
   color: transparent;
   background: linear-gradient(105deg, #fff 0 6%, #d7d2ff 45%, #8b7cff 100%);
   -webkit-background-clip: text;
