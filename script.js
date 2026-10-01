@@ -5,6 +5,7 @@ const navLinks = [...document.querySelectorAll('[data-nav]')];
 const sections = [...document.querySelectorAll('main section[id]')];
 const year = document.querySelector('#year');
 const formButton = document.querySelector('.button-form');
+const scrollIndicator = document.querySelector('.scroll-indicator');
 
 if (year) {
   year.textContent = new Date().getFullYear();
@@ -28,6 +29,26 @@ if (mobileMenu) {
 
 if (formButton?.getAttribute('aria-disabled') === 'true') {
   formButton.addEventListener('click', event => event.preventDefault());
+}
+
+let scrollCueReady = false;
+
+if (scrollIndicator) {
+  window.setTimeout(() => {
+    scrollCueReady = true;
+    if (window.scrollY < 32) {
+      scrollIndicator.classList.add('is-visible');
+    }
+  }, 4500);
+
+  const updateScrollCue = () => {
+    scrollIndicator.classList.toggle(
+      'is-visible',
+      scrollCueReady && window.scrollY < 32
+    );
+  };
+
+  window.addEventListener('scroll', updateScrollCue, { passive: true });
 }
 
 const revealTargets = document.querySelectorAll(
