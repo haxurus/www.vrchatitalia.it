@@ -7,6 +7,15 @@
   <meta name="description" content="VRChat Italia raccoglie e presenta le community italiane attive su VRChat, i loro eventi e gli scatti della community." />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#090b12" />
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('vri-theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="canonical" href="https://www.vrchatitalia.it/it/" />
   <link rel="alternate" hreflang="it" href="https://www.vrchatitalia.it/it/" />
   <link rel="alternate" hreflang="en" href="https://www.vrchatitalia.it/en/" />
@@ -36,6 +45,11 @@
         <a href="../en/" lang="en" hreflang="en">EN</a>
       </div>
 
+      <button class="theme-toggle theme-toggle--desktop" type="button" aria-label="Passa al tema chiaro" title="Passa al tema chiaro">
+        <span class="theme-toggle__sun" aria-hidden="true">☀</span>
+        <span class="theme-toggle__moon" aria-hidden="true">☾</span>
+      </button>
+
       <a class="nav-cta" href="#candidatura">Aderisci al progetto</a>
 
       <button class="menu-toggle" type="button" aria-label="Apri menu" aria-expanded="false">
@@ -54,6 +68,14 @@
         <a class="is-active" href="./" lang="it" aria-current="page">Italiano</a>
         <a href="../en/" lang="en" hreflang="en">English</a>
       </div>
+      <button class="theme-toggle theme-toggle--mobile" type="button" aria-label="Passa al tema chiaro">
+        <span class="theme-toggle__icons" aria-hidden="true">
+          <span class="theme-toggle__sun">☀</span>
+          <span class="theme-toggle__moon">☾</span>
+        </span>
+        <span class="theme-toggle__label">Tema</span>
+      </button>
+
       <a class="nav-cta" href="#candidatura">Aderisci al progetto</a>
     </nav>
   </header>
