@@ -813,17 +813,20 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 }
 
 .application-intro {
-  max-width: 800px;
+  width: 100%;
+  max-width: none;
   padding: clamp(32px, 6vw, 60px);
   padding-bottom: 38px;
 }
 
 .application-intro h2 {
+  width: 100%;
+  max-width: none;
   margin-top: 12px;
 }
 
 .application-intro p {
-  max-width: 680px;
+  max-width: none;
   margin-top: 20px;
 }
 
