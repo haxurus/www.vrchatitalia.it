@@ -528,7 +528,8 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 .project-layout {
   display: grid;
   grid-template-columns: 1.05fr .78fr;
-  gap: clamp(50px, 8vw, 110px);
+  column-gap: clamp(50px, 8vw, 110px);
+  row-gap: 34px;
   align-items: start;
 }
 
@@ -1264,7 +1265,7 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
   grid-template-columns: auto minmax(0,1fr) auto;
   gap: 24px;
   align-items: center;
-  margin-top: 42px;
+  margin-top: 0;
   padding: 24px 26px;
   border: 1px solid rgba(255,255,255,.10);
   border-radius: var(--radius-sm);
