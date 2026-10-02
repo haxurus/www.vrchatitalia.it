@@ -2441,3 +2441,236 @@ html[data-theme="light"] #events-calendar .fc-day-other .fc-daygrid-day-number {
 html[data-theme="light"] #events-calendar .fc-list-event:hover td {
   background: rgba(19,138,75,.06) !important;
 }
+
+
+/* FullCalendar hard theme override */
+
+/* Dark theme */
+#events-calendar {
+  --fc-page-bg-color: #0d110e !important;
+  --fc-neutral-bg-color: #151a16 !important;
+  --fc-neutral-text-color: #9da69f !important;
+  --fc-border-color: rgba(255,255,255,.10) !important;
+  --fc-button-text-color: #dfe4df !important;
+  --fc-button-bg-color: #1a211c !important;
+  --fc-button-border-color: rgba(255,255,255,.11) !important;
+  --fc-button-hover-bg-color: #202a23 !important;
+  --fc-button-hover-border-color: rgba(19,138,75,.48) !important;
+  --fc-button-active-bg-color: #138a4b !important;
+  --fc-button-active-border-color: #138a4b !important;
+  --fc-today-bg-color: rgba(19,138,75,.12) !important;
+  --fc-list-event-hover-bg-color: rgba(19,138,75,.10) !important;
+}
+
+#events-calendar .fc,
+#events-calendar .fc-view-harness,
+#events-calendar .fc-view,
+#events-calendar .fc-scrollgrid,
+#events-calendar .fc-scrollgrid table,
+#events-calendar .fc-scrollgrid-sync-table,
+#events-calendar .fc-scrollgrid-section,
+#events-calendar .fc-scrollgrid-section > td,
+#events-calendar .fc-scrollgrid-section-body > td,
+#events-calendar .fc-daygrid,
+#events-calendar .fc-daygrid-body,
+#events-calendar .fc-daygrid-body table,
+#events-calendar .fc-daygrid-day,
+#events-calendar .fc-daygrid-day-frame,
+#events-calendar .fc-timegrid,
+#events-calendar .fc-timegrid-body,
+#events-calendar .fc-timegrid-body table,
+#events-calendar .fc-timegrid-slots,
+#events-calendar .fc-timegrid-slots table,
+#events-calendar .fc-timegrid-cols,
+#events-calendar .fc-timegrid-cols table,
+#events-calendar .fc-timegrid-col,
+#events-calendar .fc-timegrid-col-frame,
+#events-calendar .fc-list,
+#events-calendar .fc-list-table,
+#events-calendar .fc-list-table tbody,
+#events-calendar .fc-list-table tr,
+#events-calendar .fc-list-table td,
+#events-calendar .fc-list-table th {
+  background-color: #0d110e !important;
+}
+
+#events-calendar .fc-theme-standard td,
+#events-calendar .fc-theme-standard th,
+#events-calendar td,
+#events-calendar th {
+  color: #dfe4df !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+
+#events-calendar .fc-col-header-cell,
+#events-calendar .fc-timegrid-axis,
+#events-calendar .fc-list-day-cushion {
+  background: #151a16 !important;
+}
+
+#events-calendar .fc-daygrid-day.fc-day-today,
+#events-calendar .fc-daygrid-day.fc-day-today .fc-daygrid-day-frame,
+#events-calendar .fc-timegrid-col.fc-day-today,
+#events-calendar .fc-timegrid-col.fc-day-today .fc-timegrid-col-frame {
+  background: rgba(19,138,75,.12) !important;
+}
+
+#events-calendar .fc-day-other,
+#events-calendar .fc-day-other .fc-daygrid-day-frame {
+  background: #0b0f0c !important;
+}
+
+#events-calendar .fc-button,
+#events-calendar button.fc-button {
+  color: #dfe4df !important;
+  border-color: rgba(255,255,255,.11) !important;
+  background: #1a211c !important;
+}
+
+#events-calendar .fc-button:hover,
+#events-calendar .fc-button:focus,
+#events-calendar button.fc-button:hover,
+#events-calendar button.fc-button:focus {
+  color: #fff !important;
+  border-color: rgba(19,138,75,.48) !important;
+  background: #202a23 !important;
+}
+
+#events-calendar .fc-button.fc-button-active,
+#events-calendar .fc-button:disabled,
+#events-calendar button.fc-button.fc-button-active,
+#events-calendar button.fc-button:disabled {
+  color: #fff !important;
+  border-color: #138a4b !important;
+  background: linear-gradient(135deg, #138a4b, #1f9a57) !important;
+}
+
+#events-calendar .fc-daygrid-day-number,
+#events-calendar .fc-col-header-cell-cushion,
+#events-calendar .fc-list-day-text,
+#events-calendar .fc-list-day-side-text,
+#events-calendar .fc-timegrid-axis-cushion,
+#events-calendar .fc-timegrid-slot-label-cushion,
+#events-calendar .fc-list-event-time,
+#events-calendar .fc-list-event-title a {
+  color: #dfe4df !important;
+}
+
+#events-calendar .fc-list-event:hover td {
+  background: #142219 !important;
+}
+
+/* Light theme */
+html[data-theme="light"] #events-calendar {
+  --fc-page-bg-color: #ffffff !important;
+  --fc-neutral-bg-color: #f0ede5 !important;
+  --fc-neutral-text-color: #667068 !important;
+  --fc-border-color: rgba(23,32,25,.13) !important;
+  --fc-button-text-color: #344039 !important;
+  --fc-button-bg-color: #f7f5ef !important;
+  --fc-button-border-color: rgba(23,32,25,.13) !important;
+  --fc-button-hover-bg-color: #ece9e1 !important;
+  --fc-button-hover-border-color: rgba(19,138,75,.38) !important;
+  --fc-button-active-bg-color: #138a4b !important;
+  --fc-button-active-border-color: #138a4b !important;
+  --fc-today-bg-color: rgba(19,138,75,.08) !important;
+  --fc-list-event-hover-bg-color: rgba(19,138,75,.07) !important;
+}
+
+html[data-theme="light"] #events-calendar .fc,
+html[data-theme="light"] #events-calendar .fc-view-harness,
+html[data-theme="light"] #events-calendar .fc-view,
+html[data-theme="light"] #events-calendar .fc-scrollgrid,
+html[data-theme="light"] #events-calendar .fc-scrollgrid table,
+html[data-theme="light"] #events-calendar .fc-scrollgrid-sync-table,
+html[data-theme="light"] #events-calendar .fc-scrollgrid-section,
+html[data-theme="light"] #events-calendar .fc-scrollgrid-section > td,
+html[data-theme="light"] #events-calendar .fc-scrollgrid-section-body > td,
+html[data-theme="light"] #events-calendar .fc-daygrid,
+html[data-theme="light"] #events-calendar .fc-daygrid-body,
+html[data-theme="light"] #events-calendar .fc-daygrid-body table,
+html[data-theme="light"] #events-calendar .fc-daygrid-day,
+html[data-theme="light"] #events-calendar .fc-daygrid-day-frame,
+html[data-theme="light"] #events-calendar .fc-timegrid,
+html[data-theme="light"] #events-calendar .fc-timegrid-body,
+html[data-theme="light"] #events-calendar .fc-timegrid-body table,
+html[data-theme="light"] #events-calendar .fc-timegrid-slots,
+html[data-theme="light"] #events-calendar .fc-timegrid-slots table,
+html[data-theme="light"] #events-calendar .fc-timegrid-cols,
+html[data-theme="light"] #events-calendar .fc-timegrid-cols table,
+html[data-theme="light"] #events-calendar .fc-timegrid-col,
+html[data-theme="light"] #events-calendar .fc-timegrid-col-frame,
+html[data-theme="light"] #events-calendar .fc-list,
+html[data-theme="light"] #events-calendar .fc-list-table,
+html[data-theme="light"] #events-calendar .fc-list-table tbody,
+html[data-theme="light"] #events-calendar .fc-list-table tr,
+html[data-theme="light"] #events-calendar .fc-list-table td,
+html[data-theme="light"] #events-calendar .fc-list-table th {
+  background-color: #ffffff !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-theme-standard td,
+html[data-theme="light"] #events-calendar .fc-theme-standard th,
+html[data-theme="light"] #events-calendar td,
+html[data-theme="light"] #events-calendar th {
+  color: #273229 !important;
+  border-color: rgba(23,32,25,.13) !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-col-header-cell,
+html[data-theme="light"] #events-calendar .fc-timegrid-axis,
+html[data-theme="light"] #events-calendar .fc-list-day-cushion {
+  background: #f0ede5 !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-daygrid-day.fc-day-today,
+html[data-theme="light"] #events-calendar .fc-daygrid-day.fc-day-today .fc-daygrid-day-frame,
+html[data-theme="light"] #events-calendar .fc-timegrid-col.fc-day-today,
+html[data-theme="light"] #events-calendar .fc-timegrid-col.fc-day-today .fc-timegrid-col-frame {
+  background: rgba(19,138,75,.08) !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-day-other,
+html[data-theme="light"] #events-calendar .fc-day-other .fc-daygrid-day-frame {
+  background: #f7f5ef !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-button,
+html[data-theme="light"] #events-calendar button.fc-button {
+  color: #344039 !important;
+  border-color: rgba(23,32,25,.13) !important;
+  background: #f7f5ef !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-button:hover,
+html[data-theme="light"] #events-calendar .fc-button:focus,
+html[data-theme="light"] #events-calendar button.fc-button:hover,
+html[data-theme="light"] #events-calendar button.fc-button:focus {
+  color: #172019 !important;
+  border-color: rgba(19,138,75,.38) !important;
+  background: #ece9e1 !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-button.fc-button-active,
+html[data-theme="light"] #events-calendar .fc-button:disabled,
+html[data-theme="light"] #events-calendar button.fc-button.fc-button-active,
+html[data-theme="light"] #events-calendar button.fc-button:disabled {
+  color: #fff !important;
+  border-color: #138a4b !important;
+  background: linear-gradient(135deg, #138a4b, #1f9a57) !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-daygrid-day-number,
+html[data-theme="light"] #events-calendar .fc-col-header-cell-cushion,
+html[data-theme="light"] #events-calendar .fc-list-day-text,
+html[data-theme="light"] #events-calendar .fc-list-day-side-text,
+html[data-theme="light"] #events-calendar .fc-timegrid-axis-cushion,
+html[data-theme="light"] #events-calendar .fc-timegrid-slot-label-cushion,
+html[data-theme="light"] #events-calendar .fc-list-event-time,
+html[data-theme="light"] #events-calendar .fc-list-event-title a {
+  color: #273229 !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-list-event:hover td {
+  background: #eef5f0 !important;
+}
