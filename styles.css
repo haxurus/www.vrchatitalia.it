@@ -1573,12 +1573,13 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
   border-radius: 50%;
 }
 
-.legend-dot--social { background: #27a866; }
-.legend-dot--party { background: #d94b45; }
+.legend-dot--gaming { background: #4ea1ff; }
+.legend-dot--drinking { background: #d66bc7; }
 .legend-dot--world { background: #3d9db2; }
-.legend-dot--roleplay { background: #a17ad0; }
-.legend-dot--creator { background: #d5a94c; }
-.legend-dot--community { background: #f4f1e8; }
+.legend-dot--dj { background: #d94b45; }
+.legend-dot--hangout { background: #27a866; }
+.legend-dot--age { background: #e39b4a; }
+.legend-dot--other { background: #f4f1e8; }
 
 .calendar-shell {
   overflow: hidden;
@@ -1695,12 +1696,13 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
   box-shadow: 0 5px 14px rgba(0,0,0,.13);
 }
 
-#events-calendar .event-category-social { color: #48c980 !important; background: rgba(39,168,102,.14) !important; }
-#events-calendar .event-category-party { color: #ec716b !important; background: rgba(217,75,69,.15) !important; }
-#events-calendar .event-category-world-tour { color: #63c3d6 !important; background: rgba(61,157,178,.14) !important; }
-#events-calendar .event-category-roleplay { color: #c59ae9 !important; background: rgba(161,122,208,.14) !important; }
-#events-calendar .event-category-creator { color: #e4bf69 !important; background: rgba(213,169,76,.14) !important; }
-#events-calendar .event-category-community { color: #f4f1e8 !important; background: rgba(244,241,232,.10) !important; }
+#events-calendar .event-tag-gaming { color: #73b8ff !important; background: rgba(78,161,255,.14) !important; }
+#events-calendar .event-tag-drinking { color: #e58bd8 !important; background: rgba(214,107,199,.14) !important; }
+#events-calendar .event-tag-world-exploration { color: #63c3d6 !important; background: rgba(61,157,178,.14) !important; }
+#events-calendar .event-tag-dj-disco { color: #ec716b !important; background: rgba(217,75,69,.15) !important; }
+#events-calendar .event-tag-hangout { color: #48c980 !important; background: rgba(39,168,102,.14) !important; }
+#events-calendar .event-tag-age-gated { color: #efb36a !important; background: rgba(227,155,74,.14) !important; }
+#events-calendar .event-tag-other { color: #f4f1e8 !important; background: rgba(244,241,232,.10) !important; }
 
 #events-calendar .fc-event-title,
 #events-calendar .fc-event-time {
@@ -1712,29 +1714,6 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 #events-calendar .fc-list-event-title a {
   color: var(--text);
   font-weight: 750;
-}
-
-.events-demo-note {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 22px;
-  margin-top: 18px;
-  padding: 18px 20px;
-  border: 1px dashed rgba(244,241,232,.16);
-  border-radius: 14px;
-  background: rgba(255,255,255,.016);
-}
-
-.events-demo-note strong {
-  color: #f4f1e8;
-  font-size: .82rem;
-}
-
-.events-demo-note p {
-  margin: 0;
-  color: var(--muted);
-  font-size: .78rem;
-  line-height: 1.6;
 }
 
 .event-dialog {
@@ -1954,11 +1933,6 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
 
   #events-calendar .fc-toolbar-chunk:last-child .fc-button {
     width: 100%;
-  }
-
-  .events-demo-note {
-    grid-template-columns: 1fr;
-    gap: 7px;
   }
 
   .event-dialog__header {
