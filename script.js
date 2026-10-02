@@ -88,3 +88,57 @@ if ('IntersectionObserver' in window) {
 
   sections.forEach(section => navObserver.observe(section));
 }
+
+
+const themeToggles = [...document.querySelectorAll('.theme-toggle')];
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+function getStoredTheme() {
+  try {
+    return localStorage.getItem('vri-theme') === 'light' ? 'light' : 'dark';
+  } catch (error) {
+    return 'dark';
+  }
+}
+
+function applyTheme(theme, persist = false) {
+  const nextTheme = theme === 'light' ? 'light' : 'dark';
+  document.documentElement.toggleAttribute('data-theme', nextTheme === 'light');
+
+  if (nextTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+
+  if (persist) {
+    try {
+      localStorage.setItem('vri-theme', nextTheme);
+    } catch (error) {}
+  }
+
+  const isItalian = document.documentElement.lang === 'it';
+  const isLight = nextTheme === 'light';
+  const label = isItalian
+    ? (isLight ? 'Passa al tema scuro' : 'Passa al tema chiaro')
+    : (isLight ? 'Switch to dark theme' : 'Switch to light theme');
+
+  themeToggles.forEach(toggle => {
+    toggle.setAttribute('aria-label', label);
+    toggle.setAttribute('title', label);
+    toggle.setAttribute('aria-pressed', String(isLight));
+  });
+
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute('content', isLight ? '#f4f1e8' : '#090b12');
+  }
+}
+
+applyTheme(getStoredTheme());
+
+themeToggles.forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.hasAttribute('data-theme') ? 'light' : 'dark';
+    applyTheme(currentTheme === 'light' ? 'dark' : 'light', true);
+  });
+});
