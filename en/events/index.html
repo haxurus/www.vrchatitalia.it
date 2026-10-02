@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events | VRChat Italia</title>
+  <meta name="description" content="Calendar of events organized by Italian VRChat communities." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0a0d0b" />
+  <link rel="canonical" href="https://www.vrchatitalia.it/en/events/" />
+  <link rel="alternate" hreflang="it" href="https://www.vrchatitalia.it/it/eventi/" />
+  <link rel="alternate" hreflang="en" href="https://www.vrchatitalia.it/en/events/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.vrchatitalia.it/en/events/" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/skeleton.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/themes/classic/theme.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/themes/classic/palette.css" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+
+<body class="events-page">
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="../" aria-label="VRChat Italia - Home">
+        <span class="brand-logo" aria-hidden="true">VRI</span>
+        <span class="brand-name">VRChat Italia</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="../">Home</a>
+        <a href="../#progetto">Project</a>
+        <a href="../#community">Communities</a>
+        <a class="is-active" href="./" aria-current="page">Events</a>
+        <a href="../#gallery">Gallery</a>
+        <a href="../#candidatura">Apply</a>
+      </nav>
+
+      <div class="language-switcher" aria-label="Language selector">
+        <a href="../../it/eventi/" lang="it" hreflang="it">IT</a>
+        <a class="is-active" href="./" lang="en" aria-current="page">EN</a>
+      </div>
+
+      <a class="nav-cta" href="../#candidatura">Join the project</a>
+
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+
+    <nav class="mobile-menu" aria-label="Mobile navigation">
+      <a href="../">Home</a>
+      <a href="../#progetto">Project</a>
+      <a href="../#community">Communities</a>
+      <a class="is-active" href="./" aria-current="page">Events</a>
+      <a href="../#gallery">Gallery</a>
+      <a href="../#candidatura">Apply</a>
+      <div class="mobile-language-switcher" aria-label="Language selector">
+        <a href="../../it/eventi/" lang="it" hreflang="it">Italiano</a>
+        <a class="is-active" href="./" lang="en" aria-current="page">English</a>
+      </div>
+      <a class="nav-cta" href="../#candidatura">Join the project</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="events-hero">
+      <div class="container events-hero__inner">
+        <div>
+          <span class="section-kicker">Shared calendar</span>
+          <h1>Events</h1>
+          <p>
+            Events from participating communities, collected in one calendar.
+            Switch views, filter the schedule and open an event to see all available details.
+          </p>
+        </div>
+        <div class="events-hero__meta">
+          <span>Timezone</span>
+          <strong>Europe/Rome</strong>
+          <small>Times are displayed in Italian local time.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="events-calendar-section">
+      <div class="container">
+        <div class="events-toolbar-panel">
+          <div class="event-filter">
+            <label for="events-search">Search</label>
+            <input id="events-search" type="search" placeholder="Title, community, tag..." autocomplete="off" />
+          </div>
+
+          <div class="event-filter">
+            <label for="events-community">Community</label>
+            <select id="events-community">
+              <option value="">All communities</option>
+            </select>
+          </div>
+
+          <div class="event-filter">
+            <label for="events-category">Category</label>
+            <select id="events-category">
+              <option value="">All categories</option>
+              <option value="social">Social</option>
+              <option value="party">Party / Club</option>
+              <option value="world-tour">World Tour</option>
+              <option value="roleplay">Roleplay</option>
+              <option value="creator">Creator</option>
+              <option value="community">Community</option>
+            </select>
+          </div>
+
+          <div class="event-filter">
+            <label for="events-platform">Platform</label>
+            <select id="events-platform">
+              <option value="">All</option>
+              <option value="PC">PC</option>
+              <option value="Quest">Quest</option>
+              <option value="Android">Android</option>
+            </select>
+          </div>
+
+          <div class="event-filter">
+            <label for="events-access">Access</label>
+            <select id="events-access">
+              <option value="">Any</option>
+              <option value="public">Public</option>
+              <option value="group">Group</option>
+              <option value="friends">Friends+</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+
+          <button class="events-reset" id="events-reset" type="button">Reset filters</button>
+        </div>
+
+        <div class="events-legend" aria-label="Category legend">
+          <span><i class="legend-dot legend-dot--social"></i> Social</span>
+          <span><i class="legend-dot legend-dot--party"></i> Party / Club</span>
+          <span><i class="legend-dot legend-dot--world"></i> World Tour</span>
+          <span><i class="legend-dot legend-dot--roleplay"></i> Roleplay</span>
+          <span><i class="legend-dot legend-dot--creator"></i> Creator</span>
+          <span><i class="legend-dot legend-dot--community"></i> Community</span>
+        </div>
+
+        <div class="calendar-shell">
+          <div id="events-calendar" aria-label="VRChat Italia events calendar"></div>
+        </div>
+
+        <div class="events-demo-note">
+          <strong>Demo events</strong>
+          <p>
+            The events currently shown are examples of the data structure and interface.
+            They can be replaced with real events from participating communities.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="event-dialog" id="event-dialog" aria-labelledby="event-dialog-title">
+    <button class="event-dialog__close" id="event-dialog-close" type="button" aria-label="Close">×</button>
+    <div class="event-dialog__header">
+      <div>
+        <span class="event-dialog__demo" id="event-dialog-demo">Demo event</span>
+        <span class="event-dialog__community" id="event-dialog-community"></span>
+        <h2 id="event-dialog-title"></h2>
+        <p id="event-dialog-description"></p>
+      </div>
+    </div>
+
+    <div class="event-detail-grid" id="event-detail-grid"></div>
+    <div class="event-dialog__tags" id="event-dialog-tags"></div>
+    <div class="event-dialog__actions" id="event-dialog-actions"></div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-shell">
+        <div class="footer-brand">
+          <span class="footer-brand__title">VRChat Italia</span>
+          <p>An independent meeting point dedicated to Italian communities across VRChat.</p>
+        </div>
+
+        <div class="footer-links" aria-label="Useful links">
+          <a href="../#progetto">Project</a>
+          <a href="../#community">Communities</a>
+          <a href="./">Events</a>
+          <a href="../#gallery">Gallery</a>
+          <a href="https://vrc.group/VRCITA.1559" target="_blank" rel="noopener noreferrer">VRChat Group</a>
+          <a href="../#candidatura">Apply</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>VRChat Italia © <span id="year">2026</span></span>
+        <span>Italian Community Network</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/temporal-polyfill@1.0.3/global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/all/global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/themes/classic/global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/locales-all/global.js"></script>
+  <script src="../../script.js"></script>
+  <script src="../../events.js"></script>
+</body>
+</html>
