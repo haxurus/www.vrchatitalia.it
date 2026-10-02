@@ -12,11 +12,10 @@
       week: 'Settimana',
       day: 'Giorno',
       list: 'Lista',
-      year: 'Anno',
       date: 'Data e ora',
       timezone: 'Timezone',
       community: 'Community',
-      category: 'Categoria',
+      category: 'Tag',
       world: 'Mondo / luogo',
       access: 'Accesso',
       platforms: 'Piattaforme',
@@ -42,11 +41,10 @@
       week: 'Week',
       day: 'Day',
       list: 'List',
-      year: 'Year',
       date: 'Date & time',
       timezone: 'Timezone',
       community: 'Community',
-      category: 'Category',
+      category: 'Tag',
       world: 'World / location',
       access: 'Access',
       platforms: 'Platforms',
@@ -68,14 +66,26 @@
     }
   }[lang];
 
-  const categoryLabels = {
-    social: 'Social',
-    party: 'Party / Club',
-    'world-tour': 'World Tour',
-    roleplay: 'Roleplay',
-    creator: 'Creator',
-    community: 'Community'
-  };
+  const tagLabels = {
+    it: {
+      gaming: 'Gaming Night',
+      drinking: 'Drinking Night',
+      'world-exploration': 'Esplorazione Mondi',
+      'dj-disco': 'DJ Set / Disco Night',
+      hangout: 'Relax / Hangout',
+      'age-gated': 'Solo 18+',
+      other: 'Altro'
+    },
+    en: {
+      gaming: 'Gaming Night',
+      drinking: 'Drinking Night',
+      'world-exploration': 'World Exploration',
+      'dj-disco': 'DJ Set / Disco Night',
+      hangout: 'Relax / Hangout',
+      'age-gated': 'Age Gated (18+)',
+      other: 'Other'
+    }
+  }[lang];
 
   const accessLabels = {
     it: {
@@ -99,7 +109,7 @@
       start: '2026-10-03T21:30:00+02:00',
       end: '2026-10-04T00:30:00+02:00',
       community: 'Celestia',
-      category: 'social',
+      tags: ['hangout'],
       description: {
         it: 'Serata social dimostrativa per incontrarsi, conoscere nuovi utenti e passare qualche ora insieme in VRChat.',
         en: 'Demo social evening to meet new users, hang out and spend a few hours together in VRChat.'
@@ -117,7 +127,7 @@
       organizer: 'Staff Celestia',
       contact: { it: 'Discord della community', en: 'Community Discord' },
       recurrence: { it: 'Evento singolo', en: 'One-time event' },
-      tags: ['Social', 'Meetup', 'Newcomers'],
+
       demo: true
     },
     {
@@ -126,7 +136,7 @@
       start: '2026-10-05T20:45:00+02:00',
       end: '2026-10-05T23:00:00+02:00',
       community: 'VRChat Italia',
-      category: 'world-tour',
+      tags: ['world-exploration'],
       description: {
         it: 'Tour guidato tra alcuni mondi selezionati, con tappe fotografiche e momenti social.',
         en: 'Guided tour through selected worlds, with photo stops and social moments.'
@@ -144,7 +154,7 @@
       organizer: 'VRChat Italia',
       contact: { it: 'Referenti del gruppo', en: 'Group representatives' },
       recurrence: { it: 'Evento singolo', en: 'One-time event' },
-      tags: ['Worlds', 'Exploration', 'Photo'],
+
       demo: true
     },
     {
@@ -153,7 +163,7 @@
       start: '2026-10-09T21:00:00+02:00',
       end: '2026-10-09T23:30:00+02:00',
       community: 'Creators Hub - Demo',
-      category: 'creator',
+      tags: ['other'],
       description: {
         it: 'Spazio dimostrativo per creator italiani che vogliono mostrare avatar, asset, shader o nuovi progetti.',
         en: 'Demo showcase for Italian creators presenting avatars, assets, shaders or new projects.'
@@ -171,7 +181,7 @@
       organizer: 'Creators Hub - Demo',
       contact: { it: 'Referente creator', en: 'Creator contact' },
       recurrence: { it: 'Mensile - esempio', en: 'Monthly - example' },
-      tags: ['Avatar', 'Unity', 'Blender', 'Showcase'],
+
       demo: true
     },
     {
@@ -180,7 +190,7 @@
       start: '2026-10-12T20:30:00+02:00',
       end: '2026-10-12T23:45:00+02:00',
       community: 'Roleplay Community - Demo',
-      category: 'roleplay',
+      tags: ['other', 'age-gated'],
       description: {
         it: 'Sessione introduttiva con presentazione dell’ambientazione, creazione dei gruppi e spiegazione delle regole.',
         en: 'Introductory session presenting the setting, forming groups and explaining the rules.'
@@ -198,7 +208,7 @@
       organizer: 'Roleplay Community - Demo',
       contact: { it: 'Game Master / Staff', en: 'Game Master / Staff' },
       recurrence: { it: 'Settimanale - esempio', en: 'Weekly - example' },
-      tags: ['Roleplay', 'Storytelling', 'Session'],
+
       demo: true
     },
     {
@@ -207,7 +217,7 @@
       start: '2026-10-17T22:30:00+02:00',
       end: '2026-10-18T02:30:00+02:00',
       community: 'Night Community - Demo',
-      category: 'party',
+      tags: ['dj-disco', 'age-gated'],
       description: {
         it: 'Evento musicale dimostrativo con DJ set, area chill e accesso tramite istanza Group.',
         en: 'Demo music event with DJ sets, chill area and Group instance access.'
@@ -225,7 +235,7 @@
       organizer: 'Night Community - Demo',
       contact: { it: 'Staff evento', en: 'Event staff' },
       recurrence: { it: 'Evento singolo', en: 'One-time event' },
-      tags: ['Music', 'DJ', 'Club', 'Chill'],
+
       demo: true
     },
     {
@@ -234,7 +244,7 @@
       start: '2026-10-24T21:00:00+02:00',
       end: '2026-10-24T23:59:00+02:00',
       community: 'VRChat Italia',
-      category: 'community',
+      tags: ['hangout'],
       description: {
         it: 'Esempio di incontro aperto tra utenti provenienti dalle diverse community aderenti al progetto.',
         en: 'Example meetup open to users from different communities participating in the project.'
@@ -252,13 +262,13 @@
       organizer: 'VRChat Italia',
       contact: { it: 'Staff VRChat Italia', en: 'VRChat Italia staff' },
       recurrence: { it: 'Evento singolo', en: 'One-time event' },
-      tags: ['Community', 'Meetup', 'Italia'],
+
       demo: true
     }
   ];
 
   const communitySelect = document.getElementById('events-community');
-  const categorySelect = document.getElementById('events-category');
+  const tagSelect = document.getElementById('events-tag');
   const platformSelect = document.getElementById('events-platform');
   const accessSelect = document.getElementById('events-access');
   const searchInput = document.getElementById('events-search');
@@ -278,13 +288,13 @@
   const getFilteredEvents = () => {
     const search = normalize(searchInput?.value);
     const community = communitySelect?.value || '';
-    const category = categorySelect?.value || '';
+    const tag = tagSelect?.value || '';
     const platform = platformSelect?.value || '';
     const access = accessSelect?.value || '';
 
     return events.filter(event => {
       if (community && event.community !== community) return false;
-      if (category && event.category !== category) return false;
+      if (tag && !event.tags.includes(tag)) return false;
       if (platform && !event.platforms.includes(platform)) return false;
       if (access && event.access !== access) return false;
 
@@ -292,7 +302,7 @@
         const searchable = normalize([
           event.title[lang],
           event.community,
-          categoryLabels[event.category],
+          ...event.tags.map(tag => tagLabels[tag] || tag),
           event.description[lang],
           event.world,
           ...event.tags
@@ -310,7 +320,7 @@
     title: event.title[lang],
     start: event.start,
     end: event.end,
-    classNames: ['vri-calendar-event', 'event-category-' + event.category],
+    classNames: ['vri-calendar-event', 'event-tag-' + (event.tags[0] || 'other')],
     extendedProps: event
   });
 
@@ -327,7 +337,7 @@
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth,multiMonthYear'
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
     },
     buttonText: {
       today: text.today
@@ -336,8 +346,7 @@
       dayGridMonth: { buttonText: text.month },
       timeGridWeek: { buttonText: text.week },
       timeGridDay: { buttonText: text.day },
-      listMonth: { buttonText: text.list },
-      multiMonthYear: { buttonText: text.year }
+      listMonth: { buttonText: text.list }
     },
     slotMinTime: '16:00:00',
     slotMaxTime: '30:00:00',
@@ -361,7 +370,7 @@
     getFilteredEvents().forEach(event => calendar.addEvent(toCalendarEvent(event)));
   };
 
-  [communitySelect, categorySelect, platformSelect, accessSelect].forEach(element => {
+  [communitySelect, tagSelect, platformSelect, accessSelect].forEach(element => {
     element?.addEventListener('change', applyFilters);
   });
 
@@ -370,7 +379,7 @@
   resetButton?.addEventListener('click', () => {
     if (searchInput) searchInput.value = '';
     if (communitySelect) communitySelect.value = '';
-    if (categorySelect) categorySelect.value = '';
+    if (tagSelect) tagSelect.value = '';
     if (platformSelect) platformSelect.value = '';
     if (accessSelect) accessSelect.value = '';
     applyFilters();
@@ -463,7 +472,7 @@
         detailItem(text.date, formatEventRange(event)),
         detailItem(text.timezone, 'Europe/Rome'),
         detailItem(text.community, event.community),
-        detailItem(text.category, categoryLabels[event.category] || event.category),
+        detailItem(text.category, (event.tags || []).map(tag => tagLabels[tag] || tag).join(', ')),
         detailItem(text.world, event.world),
         detailItem(text.access, accessLabels[event.access] || event.access),
         detailItem(text.platforms, event.platforms.join(', ')),
@@ -478,7 +487,7 @@
     }
 
     if (tagsEl) {
-      tagsEl.innerHTML = event.tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join('');
+      tagsEl.innerHTML = event.tags.map(tag => `<span>${escapeHtml(tagLabels[tag] || tag)}</span>`).join('');
     }
 
     if (actionsEl) {
