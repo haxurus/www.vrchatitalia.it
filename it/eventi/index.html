@@ -97,15 +97,16 @@
           </div>
 
           <div class="event-filter">
-            <label for="events-category">Categoria</label>
-            <select id="events-category">
-              <option value="">Tutte le categorie</option>
-              <option value="social">Social</option>
-              <option value="party">Party / Club</option>
-              <option value="world-tour">World Tour</option>
-              <option value="roleplay">Roleplay</option>
-              <option value="creator">Creator</option>
-              <option value="community">Community</option>
+            <label for="events-tag">Tag</label>
+            <select id="events-tag">
+              <option value="">Tutti i tag</option>
+              <option value="gaming">Gaming Night</option>
+              <option value="drinking">Drinking Night</option>
+              <option value="world-exploration">Esplorazione Mondi</option>
+              <option value="dj-disco">DJ Set / Disco Night</option>
+              <option value="hangout">Relax / Hangout</option>
+              <option value="age-gated">Solo 18+</option>
+              <option value="other">Altro</option>
             </select>
           </div>
 
@@ -133,25 +134,18 @@
           <button class="events-reset" id="events-reset" type="button">Azzera filtri</button>
         </div>
 
-        <div class="events-legend" aria-label="Legenda categorie">
-          <span><i class="legend-dot legend-dot--social"></i> Social</span>
-          <span><i class="legend-dot legend-dot--party"></i> Party / Club</span>
-          <span><i class="legend-dot legend-dot--world"></i> World Tour</span>
-          <span><i class="legend-dot legend-dot--roleplay"></i> Roleplay</span>
-          <span><i class="legend-dot legend-dot--creator"></i> Creator</span>
-          <span><i class="legend-dot legend-dot--community"></i> Community</span>
+        <div class="events-legend" aria-label="Legenda tag">
+          <span><i class="legend-dot legend-dot--gaming"></i> Gaming Night</span>
+          <span><i class="legend-dot legend-dot--drinking"></i> Drinking Night</span>
+          <span><i class="legend-dot legend-dot--world"></i> Esplorazione Mondi</span>
+          <span><i class="legend-dot legend-dot--dj"></i> DJ Set / Disco Night</span>
+          <span><i class="legend-dot legend-dot--hangout"></i> Relax / Hangout</span>
+          <span><i class="legend-dot legend-dot--age"></i> Solo 18+</span>
+          <span><i class="legend-dot legend-dot--other"></i> Altro</span>
         </div>
 
         <div class="calendar-shell">
           <div id="events-calendar" aria-label="Calendario eventi VRChat Italia"></div>
-        </div>
-
-        <div class="events-demo-note">
-          <strong>Eventi dimostrativi</strong>
-          <p>
-            Gli eventi attualmente presenti servono come esempio della struttura dati e della visualizzazione.
-            Potranno essere sostituiti con gli eventi reali delle community.
-          </p>
         </div>
       </div>
     </section>
