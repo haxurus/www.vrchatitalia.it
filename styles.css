@@ -2674,3 +2674,67 @@ html[data-theme="light"] #events-calendar .fc-list-event-title a {
 html[data-theme="light"] #events-calendar .fc-list-event:hover td {
   background: #eef5f0 !important;
 }
+
+
+/* FullCalendar v7 Classic palette variables */
+#events-calendar {
+  --fc-classic-background: #0d110e;
+  --fc-classic-foreground: #dfe4df;
+  --fc-classic-muted: #151a16;
+  --fc-classic-muted-foreground: #9da69f;
+  --fc-classic-border: rgba(255,255,255,.10);
+  --fc-classic-today: rgba(19,138,75,.12);
+  --fc-classic-highlight: rgba(19,138,75,.16);
+  --fc-classic-faint: #0b0f0c;
+  --fc-classic-primary: #138a4b;
+  --fc-classic-primary-foreground: #ffffff;
+  --fc-classic-button: #1a211c;
+  --fc-classic-button-border: rgba(255,255,255,.11);
+  --fc-classic-button-strong: #138a4b;
+  --fc-classic-button-strong-border: #138a4b;
+  --fc-classic-button-outline: rgba(19,138,75,.32);
+  --fc-classic-button-foreground: #dfe4df;
+  background: #0d110e !important;
+}
+
+#events-calendar .fc-view,
+#events-calendar .fc-view-harness,
+#events-calendar .fc-scrollgrid,
+#events-calendar .fc-scrollgrid-sync-table,
+#events-calendar .fc-daygrid-body,
+#events-calendar .fc-daygrid-body table,
+#events-calendar .fc-daygrid-day,
+#events-calendar .fc-daygrid-day-frame {
+  background: var(--fc-classic-background) !important;
+}
+
+html[data-theme="light"] #events-calendar {
+  --fc-classic-background: #ffffff;
+  --fc-classic-foreground: #273229;
+  --fc-classic-muted: #f0ede5;
+  --fc-classic-muted-foreground: #667068;
+  --fc-classic-border: rgba(23,32,25,.13);
+  --fc-classic-today: rgba(19,138,75,.08);
+  --fc-classic-highlight: rgba(19,138,75,.11);
+  --fc-classic-faint: #f7f5ef;
+  --fc-classic-primary: #138a4b;
+  --fc-classic-primary-foreground: #ffffff;
+  --fc-classic-button: #f7f5ef;
+  --fc-classic-button-border: rgba(23,32,25,.13);
+  --fc-classic-button-strong: #138a4b;
+  --fc-classic-button-strong-border: #138a4b;
+  --fc-classic-button-outline: rgba(19,138,75,.20);
+  --fc-classic-button-foreground: #344039;
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] #events-calendar .fc-view,
+html[data-theme="light"] #events-calendar .fc-view-harness,
+html[data-theme="light"] #events-calendar .fc-scrollgrid,
+html[data-theme="light"] #events-calendar .fc-scrollgrid-sync-table,
+html[data-theme="light"] #events-calendar .fc-daygrid-body,
+html[data-theme="light"] #events-calendar .fc-daygrid-body table,
+html[data-theme="light"] #events-calendar .fc-daygrid-day,
+html[data-theme="light"] #events-calendar .fc-daygrid-day-frame {
+  background: var(--fc-classic-background) !important;
+}
