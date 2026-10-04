@@ -274,8 +274,10 @@ final class VRI_Admin {
                         <label>Esito No IT<textarea name="settings[no_it]"><?php echo esc_textarea( $settings['no_it'] ?? '' ); ?></textarea></label>
                         <label>No result EN<textarea name="settings[no_en]"><?php echo esc_textarea( $settings['no_en'] ?? '' ); ?></textarea></label>
                         <label>Accent<input type="color" name="settings[accent]" value="<?php echo esc_attr( $settings['accent'] ?? '#138a4b' ); ?>"></label>
-                        <label>Background<input type="color" name="settings[background]" value="<?php echo esc_attr( $settings['background'] ?? '#0d110e' ); ?>"></label>
-                        <label>Text<input type="color" name="settings[text]" value="<?php echo esc_attr( $settings['text'] ?? '#f4f1e8' ); ?>"></label>
+                        <label>Dark background<input type="color" name="settings[background_dark]" value="<?php echo esc_attr( $settings['background_dark'] ?? '#0d110e' ); ?>"></label>
+                        <label>Dark text<input type="color" name="settings[text_dark]" value="<?php echo esc_attr( $settings['text_dark'] ?? '#f4f1e8' ); ?>"></label>
+                        <label>Light background<input type="color" name="settings[background_light]" value="<?php echo esc_attr( $settings['background_light'] ?? '#f4f1e8' ); ?>"></label>
+                        <label>Light text<input type="color" name="settings[text_light]" value="<?php echo esc_attr( $settings['text_light'] ?? '#172019' ); ?>"></label>
                         <label>Radius px<input type="number" min="0" max="60" name="settings[radius]" value="<?php echo esc_attr( $settings['radius'] ?? 20 ); ?>"></label>
                         <label>Max width px<input type="number" min="420" max="1400" name="settings[max_width]" value="<?php echo esc_attr( $settings['max_width'] ?? 760 ); ?>"></label>
                         <label class="vri-admin-wide">Custom CSS<textarea name="settings[custom_css]" rows="8"><?php echo esc_textarea( $settings['custom_css'] ?? '' ); ?></textarea></label>
@@ -375,7 +377,8 @@ final class VRI_Admin {
                 continue;
             }
             $is_locked = ! empty( $locked[ $i ] );
-            if ( $is_locked && ! in_array( $key, array( 'community_name', 'owner_email' ), true ) ) {
+            $locked_keys = array( 'community_name', 'owner_email', 'italian_members_percent', 'italian_events_percent', 'lobbies_last_7_days' );
+            if ( $is_locked && ! in_array( $key, $locked_keys, true ) ) {
                 $is_locked = false;
             }
             $type = sanitize_key( $types[ $i ] ?? 'text' );
@@ -396,6 +399,9 @@ final class VRI_Admin {
         foreach ( array(
             array( 'key' => 'community_name', 'type' => 'text', 'label_it' => 'Nome community', 'label_en' => 'Community name' ),
             array( 'key' => 'owner_email', 'type' => 'email', 'label_it' => 'Email del proprietario', 'label_en' => 'Owner email' ),
+            array( 'key' => 'italian_members_percent', 'type' => 'number', 'label_it' => '% utenti italiani', 'label_en' => '% Italian members' ),
+            array( 'key' => 'italian_events_percent', 'type' => 'number', 'label_it' => '% eventi in italiano', 'label_en' => '% events held in Italian' ),
+            array( 'key' => 'lobbies_last_7_days', 'type' => 'number', 'label_it' => 'Lobby aperte negli ultimi 7 giorni', 'label_en' => 'Lobbies opened in the last 7 days' ),
         ) as $system ) {
             $found = false;
             foreach ( $fields as &$field ) {
@@ -426,8 +432,10 @@ final class VRI_Admin {
             'no_it' => sanitize_textarea_field( $settings_in['no_it'] ?? '' ),
             'no_en' => sanitize_textarea_field( $settings_in['no_en'] ?? '' ),
             'accent' => sanitize_hex_color( $settings_in['accent'] ?? '#138a4b' ) ?: '#138a4b',
-            'background' => sanitize_hex_color( $settings_in['background'] ?? '#0d110e' ) ?: '#0d110e',
-            'text' => sanitize_hex_color( $settings_in['text'] ?? '#f4f1e8' ) ?: '#f4f1e8',
+            'background_dark' => sanitize_hex_color( $settings_in['background_dark'] ?? '#0d110e' ) ?: '#0d110e',
+            'text_dark' => sanitize_hex_color( $settings_in['text_dark'] ?? '#f4f1e8' ) ?: '#f4f1e8',
+            'background_light' => sanitize_hex_color( $settings_in['background_light'] ?? '#f4f1e8' ) ?: '#f4f1e8',
+            'text_light' => sanitize_hex_color( $settings_in['text_light'] ?? '#172019' ) ?: '#172019',
             'radius' => min( 60, absint( $settings_in['radius'] ?? 20 ) ),
             'max_width' => min( 1400, max( 420, absint( $settings_in['max_width'] ?? 760 ) ) ),
             'custom_css' => wp_strip_all_tags( $settings_in['custom_css'] ?? '' ),
