@@ -1133,6 +1133,21 @@ final class VRI_Model {
         return true;
     }
 
+    public static function event_local_input( $utc_mysql ) {
+        if ( ! $utc_mysql ) {
+            return '';
+        }
+        return self::local_dt( $utc_mysql )->format( 'Y-m-d\\TH:i' );
+    }
+
+    public static function event_local_display( $utc_mysql, $lang = 'en' ) {
+        if ( ! $utc_mysql ) {
+            return '';
+        }
+        $dt = self::local_dt( $utc_mysql );
+        return 'it' === $lang ? $dt->format( 'd/m/Y H:i' ) : $dt->format( 'Y-m-d H:i' );
+    }
+
     public static function public_events( $from = '', $to = '' ) {
         global $wpdb;
         $where = "status='approved'";
