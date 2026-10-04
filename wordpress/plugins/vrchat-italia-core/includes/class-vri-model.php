@@ -8,6 +8,15 @@ final class VRI_Model {
 
     public static function hooks() {
         add_action( 'vri_process_slot_timeouts', array( __CLASS__, 'process_slot_timeouts' ) );
+        add_action( 'init', array( __CLASS__, 'maybe_process_slot_timeouts' ), 20 );
+    }
+
+    public static function maybe_process_slot_timeouts() {
+        if ( get_transient( 'vri_slot_timeout_lock' ) ) {
+            return;
+        }
+        set_transient( 'vri_slot_timeout_lock', 1, 5 * MINUTE_IN_SECONDS );
+        self::process_slot_timeouts();
     }
 
     private static function table( $name ) {
@@ -257,15 +266,27 @@ final class VRI_Model {
             return new WP_Error( 'vri_contacts', 'At least one verifiable official contact is required.' );
         }
 
-        $exists = $wpdb->get_var(
+        $existing = $wpdb->get_row(
             $wpdb->prepare(
-                "SELECT id FROM " . self::table( 'applications' ) . " WHERE (email=%s OR community_name=%s) AND status NOT IN ('rejected','approved') LIMIT 1",
+                "SELECT * FROM " . self::table( 'applications' ) . " WHERE (email=%s OR community_name=%s) AND status NOT IN ('rejected','approved') ORDER BY id DESC LIMIT 1",
                 $email,
                 $community_name
-            )
+            ),
+            ARRAY_A
         );
-        if ( $exists ) {
-            return new WP_Error( 'vri_duplicate', 'An application for this email or community is already active.' );
+        if ( $existing ) {
+            $expired_email = 'pending_email' === $existing['status']
+                && ! empty( $existing['verification_expires_at'] )
+                && strtotime( $existing['verification_expires_at'] . ' UTC' ) < time();
+            if ( $expired_email ) {
+                $wpdb->update(
+                    self::table( 'applications' ),
+                    array( 'status' => 'rejected', 'decided_at' => self::now() ),
+                    array( 'id' => absint( $existing['id'] ) )
+                );
+            } else {
+                return new WP_Error( 'vri_duplicate', 'An application for this email or community is already active.' );
+            }
         }
 
         $token = wp_generate_password( 48, false, false );
@@ -528,9 +549,15 @@ final class VRI_Model {
             $new_user = true;
         }
 
-        $slug = wp_unique_post_slug( sanitize_title( $application['community_name'] ), 0, 'publish', 'vri_community', 0 );
-        if ( ! $slug ) {
-            $slug = sanitize_title( $application['community_name'] ) . '-' . wp_generate_password( 6, false, false );
+        $base_slug = sanitize_title( $application['community_name'] );
+        if ( '' === $base_slug ) {
+            $base_slug = 'community';
+        }
+        $slug = $base_slug;
+        $slug_n = 2;
+        while ( $wpdb->get_var( $wpdb->prepare( "SELECT id FROM " . self::table( 'communities' ) . " WHERE slug=%s LIMIT 1", $slug ) ) ) {
+            $slug = $base_slug . '-' . $slug_n;
+            $slug_n++;
         }
 
         $ok = $wpdb->insert(
@@ -677,16 +704,27 @@ final class VRI_Model {
             }
         }
 
-        $slot = self::slot_is_available(
-            $community_id,
-            $payload['start_at_utc'],
-            $payload['end_at_utc'],
-            $event_id
-        );
+        $same_published_schedule = $event
+            && 'approved' === $event['status']
+            && $event['start_at_utc'] === $payload['start_at_utc']
+            && $event['end_at_utc'] === $payload['end_at_utc'];
 
-        $pending_status = $slot['available'] ? 'admin_review' : 'blocked';
-        $pending_slot_mode = $slot['available'] ? 'normal' : null;
-        $rotation = self::approved_community_count();
+        if ( $same_published_schedule ) {
+            $slot = array( 'available' => true );
+            $pending_status = 'admin_review';
+            $pending_slot_mode = $event['slot_mode'];
+            $rotation = max( 1, (int) $event['rotation_size'] );
+        } else {
+            $slot = self::slot_is_available(
+                $community_id,
+                $payload['start_at_utc'],
+                $payload['end_at_utc'],
+                $event_id
+            );
+            $pending_status = $slot['available'] ? 'admin_review' : 'blocked';
+            $pending_slot_mode = $slot['available'] ? 'normal' : null;
+            $rotation = self::approved_community_count();
+        }
         $now = self::now();
 
         if ( $event_id ) {
