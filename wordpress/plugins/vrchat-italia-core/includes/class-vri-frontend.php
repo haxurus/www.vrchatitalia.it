@@ -531,7 +531,7 @@ final class VRI_Frontend {
         $alert_count = count( $application_alerts ) + count( $slot_alerts );
 
         echo '<div class="vri-dashboard">';
-        echo '<header class="vri-dashboard__header"><div><span>VRChat Italia</span><h1>' . esc_html( $community['name'] ) . '</h1></div><div class="vri-dashboard__user">' . esc_html( $user->display_name ) . ' · <a href="' . esc_url( wp_logout_url( home_url( '/' . $lang . '/' ) ) ) . '">' . esc_html( 'it' === $lang ? 'Esci' : 'Log out' ) . '</a></div></header>';
+        echo '<header class="vri-dashboard__header"><div><span>VRC Italia Network</span><h1>' . esc_html( $community['name'] ) . '</h1></div><div class="vri-dashboard__user">' . esc_html( $user->display_name ) . ' · <a href="' . esc_url( wp_logout_url( home_url( '/' . $lang . '/' ) ) ) . '">' . esc_html( 'it' === $lang ? 'Esci' : 'Log out' ) . '</a></div></header>';
 
         if ( isset( $_GET['vri_status'] ) ) {
             echo '<div class="vri-dashboard__notice">' . esc_html( sanitize_text_field( wp_unslash( $_GET['vri_status'] ) ) ) . '</div>';

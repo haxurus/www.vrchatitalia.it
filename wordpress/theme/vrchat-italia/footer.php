@@ -3,7 +3,7 @@
   <div class="container footer-inner">
     <div class="footer-shell">
       <div class="footer-brand">
-        <span class="footer-brand__title">VRChat Italia</span>
+        <span class="footer-brand__title">VRC Italia Network</span>
         <p><?php echo esc_html( 'it' === $lang ? 'Un punto di incontro indipendente dedicato alle community italiane presenti nel mondo di VRChat.' : 'An independent meeting point dedicated to Italian communities across VRChat.' ); ?></p>
       </div>
       <div class="footer-links">
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>VRChat Italia © <?php echo esc_html( gmdate( 'Y' ) ); ?> · Made with 💚 by <a href="https://haxurus.com" target="_blank" rel="noopener noreferrer">Haxurus</a></span>
+      <span>VRC Italia Network © <?php echo esc_html( gmdate( 'Y' ) ); ?> · Made with 💚 by <a href="https://haxurus.com" target="_blank" rel="noopener noreferrer">Haxurus</a></span>
       <span>Italian Community Network</span>
     </div>
   </div>

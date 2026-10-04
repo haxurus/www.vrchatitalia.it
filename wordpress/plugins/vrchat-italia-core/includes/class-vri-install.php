@@ -169,7 +169,7 @@ final class VRI_Install {
     private static function roles() {
         add_role(
             'vri_community_owner',
-            'VRChat Italia - Community Owner',
+            'VRC Italia Network - Community Owner',
             array(
                 'read' => true,
                 'vri_manage_community' => true,
@@ -236,8 +236,8 @@ final class VRI_Install {
                 array(
                     'title_it' => 'Candidatura community',
                     'title_en' => 'Community application',
-                    'intro_it' => 'Compila il modulo per candidare la tua community a VRChat Italia.',
-                    'intro_en' => 'Complete the form to apply your community to VRChat Italia.',
+                    'intro_it' => 'Compila il modulo per candidare la tua community a VRC Italia Network.',
+                    'intro_en' => 'Complete the form to apply your community to VRC Italia Network.',
                     'submit_it' => 'Invia candidatura',
                     'submit_en' => 'Submit application',
                     'yes_it' => 'La tua candidatura è stata accettata.',

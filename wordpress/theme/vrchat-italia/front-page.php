@@ -11,7 +11,7 @@ $slides = array_slice( $banners, 0, 4 );
 while ( count( $slides ) < 4 ) { $slides[] = null; }
 ?>
 <main>
-  <section class="hero" id="home" aria-label="VRChat Italia">
+  <section class="hero" id="home" aria-label="VRC Italia Network">
     <div class="hero-slideshow" aria-hidden="true">
       <?php foreach ( $slides as $i => $slide ) : ?>
         <div class="hero-slide hero-slide--<?php echo esc_attr( $i + 1 ); ?>"<?php echo $slide ? ' style="background-image:linear-gradient(135deg,rgba(7,9,15,.20),rgba(7,9,15,.08)),url(' . esc_url( $slide['url'] ) . ')"' : ''; ?>></div>
@@ -44,14 +44,14 @@ while ( count( $slides ) < 4 ) { $slides[] = null; }
         <h2><?php echo esc_html( $it ? 'Un punto di incontro per la VR italiana.' : 'A meeting point for the Italian VR community.' ); ?></h2>
       </div>
       <div class="project-copy">
-        <p><?php echo esc_html( $it ? 'VRChat Italia nasce per rendere più semplice scoprire le community italiane attive su VRChat, conoscere nuovi gruppi e dare visibilità alle realtà che contribuiscono ogni giorno alla scena italiana.' : 'VRChat Italia makes it easier to discover Italian communities active on VRChat, meet new groups and give visibility to the people and projects contributing to the Italian scene every day.' ); ?></p>
+        <p><?php echo esc_html( $it ? 'VRC Italia Network nasce per rendere più semplice scoprire le community italiane attive su VRChat, conoscere nuovi gruppi e dare visibilità alle realtà che contribuiscono ogni giorno alla scena italiana.' : 'VRC Italia Network makes it easier to discover Italian communities active on VRChat, meet new groups and give visibility to the people and projects contributing to the Italian scene every day.' ); ?></p>
         <p class="project-note"><?php echo esc_html( $it ? 'Il portale non sostituisce le singole community: le mette in contatto e le rende più facili da trovare.' : 'The portal does not replace individual communities: it connects them and makes them easier to discover.' ); ?></p>
       </div>
 
       <div class="national-group">
         <div class="national-group__flag" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="national-group__copy">
-          <span class="national-group__label"><?php echo esc_html( $it ? 'Gruppo VRChat Italia' : 'VRChat Italia Group' ); ?></span>
+          <span class="national-group__label"><?php echo esc_html( $it ? 'Gruppo VRC Italia Network' : 'VRC Italia Network Group' ); ?></span>
           <strong><?php echo esc_html( $it ? 'Porta con orgoglio la community italiana nel mondo.' : 'Represent the Italian community around the world with pride.' ); ?></strong>
           <p><?php echo esc_html( $it ? 'Tutti gli utenti italiani sono invitati a entrare nel gruppo comune per mostrare la propria nazionalità e rappresentare insieme la community italiana su VRChat.' : 'All Italian users are invited to join the shared group, show their nationality and represent the Italian community together across VRChat.' ); ?></p>
         </div>
@@ -84,7 +84,7 @@ while ( count( $slides ) < 4 ) { $slides[] = null; }
             </div>
             <div class="community-card__body">
               <div class="community-logo"><?php if ( $logo ) : ?><img src="<?php echo esc_url( $logo ); ?>" alt=""><?php else : ?><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?><?php endif; ?></div>
-              <div><h3><?php echo esc_html( $community['name'] ); ?></h3><p><?php echo esc_html( $description ?: ( $it ? 'Community italiana aderente a VRChat Italia.' : 'Italian community participating in VRChat Italia.' ) ); ?></p></div>
+              <div><h3><?php echo esc_html( $community['name'] ); ?></h3><p><?php echo esc_html( $description ?: ( $it ? 'Community italiana aderente a VRC Italia Network.' : 'Italian community participating in VRC Italia Network.' ) ); ?></p></div>
               <?php if ( $link ) : ?><a href="<?php echo esc_url( $link ); ?>" target="_blank" rel="noopener noreferrer" class="community-link"><?php echo esc_html( $it ? 'Scopri' : 'Discover' ); ?> <span>↗</span></a><?php endif; ?>
             </div>
           </article>
@@ -112,7 +112,7 @@ while ( count( $slides ) < 4 ) { $slides[] = null; }
         </div>
       </div>
       <a class="home-events-preview" href="<?php echo esc_url( vri_theme_url( 'events', $lang ) ); ?>" aria-label="Calendar">
-        <div class="home-events-preview__top"><span><?php echo esc_html( $it ? 'Calendario condiviso' : 'Shared calendar' ); ?></span><strong>VRChat Italia</strong></div>
+        <div class="home-events-preview__top"><span><?php echo esc_html( $it ? 'Calendario condiviso' : 'Shared calendar' ); ?></span><strong>VRC Italia Network</strong></div>
         <div class="home-events-preview__week" aria-hidden="true"><?php foreach ( $it ? array('LUN','MAR','MER','GIO','VEN','SAB','DOM') : array('MON','TUE','WED','THU','FRI','SAT','SUN') as $day ) : ?><span><?php echo esc_html( $day ); ?></span><?php endforeach; ?></div>
         <div class="home-events-preview__grid" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span><span class="has-event event-green"></span><span></span>
@@ -154,7 +154,7 @@ while ( count( $slides ) < 4 ) { $slides[] = null; }
     <div class="container">
       <div class="application-panel">
         <div class="application-intro">
-          <span class="section-kicker"><?php echo esc_html( $it ? 'Aderisci a VRChat Italia' : 'Join VRChat Italia' ); ?></span>
+          <span class="section-kicker"><?php echo esc_html( $it ? 'Aderisci a VRC Italia Network' : 'Join VRC Italia Network' ); ?></span>
           <h2><?php echo esc_html( $it ? 'Porta la tua community nel network.' : 'Bring your community into the network.' ); ?></h2>
           <p><?php echo esc_html( $it ? 'Per mantenere il progetto utile e ordinato, le realtà che desiderano aderire devono rispettare alcuni requisiti di base.' : 'To keep the project useful and organized, communities wishing to join must meet a few basic requirements.' ); ?></p>
         </div>
@@ -162,7 +162,7 @@ while ( count( $slides ) < 4 ) { $slides[] = null; }
           <div class="requirement"><span>01</span><div><strong><?php echo esc_html( $it ? 'Community prevalentemente italiana' : 'Predominantly Italian community' ); ?></strong><p><?php echo esc_html( $it ? "Oltre l'80% degli utenti deve essere italiano e oltre l'80% degli eventi deve essere svolto in lingua italiana." : 'More than 80% of members must be Italian and more than 80% of events must be held in Italian.' ); ?></p></div></div>
           <div class="requirement"><span>02</span><div><strong><?php echo esc_html( $it ? 'Presenza attiva su VRChat' : 'Active presence on VRChat' ); ?></strong><p><?php echo esc_html( $it ? 'La community deve aver aperto almeno 5 lobby su VRChat negli ultimi 7 giorni.' : 'The community must have opened at least 5 VRChat lobbies within the last 7 days.' ); ?></p></div></div>
           <div class="requirement"><span>03</span><div><strong><?php echo esc_html( $it ? 'Contatti verificabili' : 'Verifiable contacts' ); ?></strong><p><?php echo esc_html( $it ? 'Deve essere disponibile almeno un canale ufficiale verificabile, come Discord, Instagram o un sito web.' : 'At least one verifiable official channel must be available, such as Discord, Instagram or a website.' ); ?></p></div></div>
-          <div class="requirement"><span>04</span><div><strong><?php echo esc_html( $it ? 'Ambiente compatibile con il progetto' : 'Environment compatible with the project' ); ?></strong><p><?php echo esc_html( $it ? 'La community deve avere un ambiente e una gestione compatibili con le finalità del progetto VRChat Italia.' : "The community's environment and management must be compatible with the purpose of the VRChat Italia project." ); ?></p></div></div>
+          <div class="requirement"><span>04</span><div><strong><?php echo esc_html( $it ? 'Ambiente compatibile con il progetto' : 'Environment compatible with the project' ); ?></strong><p><?php echo esc_html( $it ? 'La community deve avere un ambiente e una gestione compatibili con le finalità del progetto VRC Italia Network.' : "The community's environment and management must be compatible with the purpose of the VRC Italia Network project." ); ?></p></div></div>
         </div>
         <div class="application-action">
           <div><strong><?php echo esc_html( $it ? 'Pronto a candidare la tua community?' : 'Ready to submit your community?' ); ?></strong><span><?php echo esc_html( $it ? 'Il modulo verrà aperto direttamente sul sito.' : 'The application form opens directly on the site.' ); ?></span></div>

@@ -358,7 +358,7 @@ final class VRI_Design_Sync {
         delete_transient( 'vri_design_notice_' . get_current_user_id() );
         ?>
         <div class="wrap vri-admin">
-            <h1>VRChat Italia - Design Sync</h1>
+            <h1>VRC Italia Network - Design Sync</h1>
             <p>Sincronizza manualmente solo gli asset di design approvati dal repository GitHub. Database, utenti, community, voti, eventi e upload non vengono mai toccati.</p>
 
             <?php if ( is_array( $notice ) ) : ?>

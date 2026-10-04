@@ -319,7 +319,7 @@ final class VRI_Model {
             home_url( '/' )
         );
 
-        $subject = 'it' === $lang ? 'Verifica candidatura VRChat Italia' : 'Verify your VRChat Italia application';
+        $subject = 'it' === $lang ? 'Verifica candidatura VRC Italia Network' : 'Verify your VRC Italia Network application';
         $body = 'it' === $lang
             ? "Conferma il tuo indirizzo email per avviare la candidatura:\n\n" . $url
             : "Confirm your email address to start the application process:\n\n" . $url;
@@ -610,8 +610,8 @@ final class VRI_Model {
         $payload = self::decode( $application['payload'] );
         $lang = isset( $payload['_lang'] ) && 'en' === $payload['_lang'] ? 'en' : 'it';
         $subject = $approved
-            ? ( 'it' === $lang ? 'VRChat Italia - candidatura accettata' : 'VRChat Italia - application accepted' )
-            : ( 'it' === $lang ? 'VRChat Italia - esito candidatura' : 'VRChat Italia - application result' );
+            ? ( 'it' === $lang ? 'VRC Italia Network - candidatura accettata' : 'VRC Italia Network - application accepted' )
+            : ( 'it' === $lang ? 'VRC Italia Network - esito candidatura' : 'VRC Italia Network - application result' );
         $message = $approved
             ? ( $settings[ 'yes_' . $lang ] ?? ( 'it' === $lang ? 'La tua candidatura è stata accettata.' : 'Your application has been accepted.' ) )
             : ( $settings[ 'no_' . $lang ] ?? ( 'it' === $lang ? 'La tua candidatura non è stata accettata.' : 'Your application has not been accepted.' ) );

@@ -21,9 +21,9 @@ $dashboard = vri_theme_url( 'dashboard', $lang );
 <?php wp_body_open(); ?>
 <header class="site-header">
   <div class="container nav">
-    <a class="brand" href="<?php echo esc_url( $home ); ?>" aria-label="VRChat Italia - Home">
-      <span class="brand-logo" aria-hidden="true">VRI</span>
-      <span class="brand-name">VRChat Italia</span>
+    <a class="brand" href="<?php echo esc_url( $home ); ?>" aria-label="VRC Italia Network - Home">
+      <span class="brand-logo" aria-hidden="true">VRC</span>
+      <span class="brand-name">VRC Italia Network</span>
     </a>
 
     <nav class="nav-links" aria-label="<?php echo esc_attr( 'it' === $lang ? 'Navigazione principale' : 'Main navigation' ); ?>">

@@ -44,7 +44,7 @@ get_header();
         <span><i class="legend-dot legend-dot--other"></i> <?php echo esc_html( $it ? 'Altro' : 'Other' ); ?></span>
       </div>
 
-      <div class="calendar-shell"><div id="events-calendar" aria-label="VRChat Italia events calendar"></div></div>
+      <div class="calendar-shell"><div id="events-calendar" aria-label="VRC Italia Network events calendar"></div></div>
     </div>
   </section>
 </main>

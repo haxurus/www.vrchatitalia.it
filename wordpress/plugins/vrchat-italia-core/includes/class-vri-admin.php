@@ -14,8 +14,8 @@ final class VRI_Admin {
 
     public static function menu() {
         add_menu_page(
-            'VRChat Italia',
-            'VRChat Italia',
+            'VRC Italia Network',
+            'VRC Italia Network',
             'manage_options',
             'vri',
             array( __CLASS__, 'dashboard_page' ),
@@ -62,7 +62,7 @@ final class VRI_Admin {
         }
         ?>
         <div class="wrap vri-admin">
-            <h1>VRChat Italia</h1>
+            <h1>VRC Italia Network</h1>
             <div class="vri-admin-stats">
                 <a href="<?php echo esc_url( self::admin_url( 'vri-communities' ) ); ?>"><strong><?php echo count( $communities ); ?></strong><span>Community approvate</span></a>
                 <a href="<?php echo esc_url( self::admin_url( 'vri-applications' ) ); ?>"><strong><?php echo absint( $eligible ); ?></strong><span>Candidature pronte</span></a>

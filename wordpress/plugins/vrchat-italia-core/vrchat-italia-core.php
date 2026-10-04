@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: VRChat Italia Core
- * Description: Community management, owner dashboard, applications, events, moderation and GitHub design synchronization for VRChat Italia.
+ * Plugin Name: VRC Italia Network Core
+ * Description: Community management, owner dashboard, applications, events, moderation and GitHub design synchronization for VRC Italia Network.
  * Version: 0.1.0
  * Requires at least: 6.2
  * Requires PHP: 7.4

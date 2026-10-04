@@ -8,7 +8,7 @@ get_header();
   if ( function_exists( 'vri_render_owner_dashboard' ) ) {
       vri_render_owner_dashboard( $lang );
   } else {
-      echo '<div class="container"><p>VRChat Italia Core is required.</p></div>';
+      echo '<div class="container"><p>VRC Italia Network Core is required.</p></div>';
   }
   ?>
 </main>
