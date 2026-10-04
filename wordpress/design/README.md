@@ -1,6 +1,6 @@
-# VRChat Italia design source
+# VRC Italia Network design source
 
-Files in this directory are the allow-listed source for **VRChat Italia > Design Sync**.
+Files in this directory are the allow-listed source for **VRC Italia Network > Design Sync**.
 
 - `site.css`: public visual design
 - `site.js`: shared public UI behavior

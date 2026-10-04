@@ -1,12 +1,12 @@
-# VRChat Italia - WordPress
+# VRC Italia Network - WordPress
 
-This directory contains the WordPress implementation of VRChat Italia.
+This directory contains the WordPress implementation of VRC Italia Network.
 
 ## Architecture
 
 - `theme/vrchat-italia`: presentation layer only. It renders the public site, the events page and the owner dashboard shell.
 - `plugins/vrchat-italia-core`: data, permissions, moderation, applications, voting, events, owner dashboard and GitHub design synchronization.
-- `design`: the manually synchronized design source. The active WordPress site can fetch these assets from GitHub from **VRChat Italia > Design Sync**.
+- `design`: the manually synchronized design source. The active WordPress site can fetch these assets from GitHub from **VRC Italia Network > Design Sync**.
 
 The public prototype in the repository root can remain useful for visual development, but WordPress runtime data never comes from static HTML.
 
@@ -21,8 +21,8 @@ Community data, accounts, votes, events and uploaded media remain in the WordPre
 1. Back up the WordPress database and `wp-content`.
 2. Copy `theme/vrchat-italia` to `wp-content/themes/vrchat-italia`.
 3. Copy `plugins/vrchat-italia-core` to `wp-content/plugins/vrchat-italia-core`.
-4. Activate **VRChat Italia Core**.
-5. Activate **VRChat Italia** as the current theme.
+4. Activate **VRC Italia Network Core**.
+5. Activate **VRC Italia Network** as the current theme.
 6. Open **Settings > Permalinks** once if the routes are not refreshed by activation.
 7. Test:
    - `/it/`
@@ -31,7 +31,7 @@ Community data, accounts, votes, events and uploaded media remain in the WordPre
    - `/en/events/`
    - `/it/dashboard/`
    - `/en/dashboard/`
-8. Open **VRChat Italia > Design Sync**, verify the repository and manually synchronize the design.
+8. Open **VRC Italia Network > Design Sync**, verify the repository and manually synchronize the design.
 
 Test on staging before production.
 

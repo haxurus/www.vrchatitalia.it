@@ -135,13 +135,13 @@
       title: { it: 'Italian World Tour', en: 'Italian World Tour' },
       start: '2026-10-05T20:45:00+02:00',
       end: '2026-10-05T23:00:00+02:00',
-      community: 'VRChat Italia',
+      community: 'VRC Italia Network',
       tags: ['world-exploration'],
       description: {
         it: 'Tour guidato tra alcuni mondi selezionati, con tappe fotografiche e momenti social.',
         en: 'Guided tour through selected worlds, with photo stops and social moments.'
       },
-      world: 'Partenza dal gruppo VRChat Italia',
+      world: 'Partenza dal gruppo VRC Italia Network',
       access: 'group',
       platforms: ['PC', 'Quest'],
       language: { it: 'Italiano', en: 'Italian' },
@@ -151,7 +151,7 @@
       registrationUrl: '',
       groupUrl: 'https://vrc.group/VRCITA.1559',
       eventUrl: '',
-      organizer: 'VRChat Italia',
+      organizer: 'VRC Italia Network',
       contact: { it: 'Referenti del gruppo', en: 'Group representatives' },
       recurrence: { it: 'Evento singolo', en: 'One-time event' },
 
@@ -240,16 +240,16 @@
     },
     {
       id: 'demo-national-meetup',
-      title: { it: 'Meetup VRChat Italia', en: 'VRChat Italia Meetup' },
+      title: { it: 'Meetup VRC Italia Network', en: 'VRC Italia Network Meetup' },
       start: '2026-10-24T21:00:00+02:00',
       end: '2026-10-24T23:59:00+02:00',
-      community: 'VRChat Italia',
+      community: 'VRC Italia Network',
       tags: ['hangout'],
       description: {
         it: 'Esempio di incontro aperto tra utenti provenienti dalle diverse community aderenti al progetto.',
         en: 'Example meetup open to users from different communities participating in the project.'
       },
-      world: 'VRChat Italia Meeting Point',
+      world: 'VRC Italia Network Meeting Point',
       access: 'group',
       platforms: ['PC', 'Quest', 'Android'],
       language: { it: 'Italiano', en: 'Italian' },
@@ -259,8 +259,8 @@
       registrationUrl: '',
       groupUrl: 'https://vrc.group/VRCITA.1559',
       eventUrl: '',
-      organizer: 'VRChat Italia',
-      contact: { it: 'Staff VRChat Italia', en: 'VRChat Italia staff' },
+      organizer: 'VRC Italia Network',
+      contact: { it: 'Staff VRC Italia Network', en: 'VRC Italia Network staff' },
       recurrence: { it: 'Evento singolo', en: 'One-time event' },
 
       demo: true

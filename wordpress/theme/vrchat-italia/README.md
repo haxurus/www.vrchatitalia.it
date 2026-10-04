@@ -1,6 +1,6 @@
-# VRChat Italia Theme
+# VRC Italia Network Theme
 
-Presentation theme for the VRChat Italia Core plugin.
+Presentation theme for the VRC Italia Network Core plugin.
 
 The theme keeps public rendering separate from operational data. It includes fallback design assets and can use the currently active design snapshot synchronized by the Core plugin.
 

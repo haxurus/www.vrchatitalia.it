@@ -1,6 +1,6 @@
-# VRChat Italia Core
+# VRC Italia Network Core
 
-WordPress backend for VRChat Italia.
+WordPress backend for VRC Italia Network.
 
 ## Main features
 
