@@ -204,6 +204,7 @@ final class VRI_Model {
             return new WP_Error( 'vri_forbidden', 'Image not available.' );
         }
         $wpdb->delete( self::table( 'community_images' ), array( 'id' => absint( $image_id ) ) );
+        wp_delete_attachment( absint( $row['attachment_id'] ), true );
         return true;
     }
 
@@ -244,11 +245,16 @@ final class VRI_Model {
             return new WP_Error( 'vri_name', 'Community name is required.' );
         }
 
+        $payload['_lang'] = 'it' === $lang ? 'it' : 'en';
+
         $members = isset( $payload['italian_members_percent'] ) ? (float) $payload['italian_members_percent'] : 0;
         $events = isset( $payload['italian_events_percent'] ) ? (float) $payload['italian_events_percent'] : 0;
         $lobbies = isset( $payload['lobbies_last_7_days'] ) ? (int) $payload['lobbies_last_7_days'] : 0;
         if ( $members < 80 || $events < 80 || $lobbies < 5 ) {
             return new WP_Error( 'vri_requirements', 'The minimum project requirements are not met.' );
+        }
+        if ( empty( $payload['discord_url'] ) && empty( $payload['instagram_url'] ) && empty( $payload['website_url'] ) && empty( $payload['vrchat_group_url'] ) ) {
+            return new WP_Error( 'vri_contacts', 'At least one verifiable official contact is required.' );
         }
 
         $exists = $wpdb->get_var(
@@ -574,10 +580,14 @@ final class VRI_Model {
             return;
         }
         $settings = get_option( 'vri_form_settings', array() );
-        $subject = $approved ? 'VRChat Italia - candidatura accettata' : 'VRChat Italia - esito candidatura';
+        $payload = self::decode( $application['payload'] );
+        $lang = isset( $payload['_lang'] ) && 'en' === $payload['_lang'] ? 'en' : 'it';
+        $subject = $approved
+            ? ( 'it' === $lang ? 'VRChat Italia - candidatura accettata' : 'VRChat Italia - application accepted' )
+            : ( 'it' === $lang ? 'VRChat Italia - esito candidatura' : 'VRChat Italia - application result' );
         $message = $approved
-            ? ( $settings['yes_it'] ?? 'La tua candidatura è stata accettata.' )
-            : ( $settings['no_it'] ?? 'La tua candidatura non è stata accettata.' );
+            ? ( $settings[ 'yes_' . $lang ] ?? ( 'it' === $lang ? 'La tua candidatura è stata accettata.' : 'Your application has been accepted.' ) )
+            : ( $settings[ 'no_' . $lang ] ?? ( 'it' === $lang ? 'La tua candidatura non è stata accettata.' : 'Your application has not been accepted.' ) );
         wp_mail( $application['email'], $subject, wp_strip_all_tags( $message ) );
     }
 
