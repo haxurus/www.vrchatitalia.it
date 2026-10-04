@@ -172,13 +172,26 @@ final class VRI_Install {
             'VRChat Italia - Community Owner',
             array(
                 'read' => true,
-                'upload_files' => true,
                 'vri_manage_community' => true,
                 'vri_manage_events' => true,
                 'vri_vote_applications' => true,
                 'vri_vote_slots' => true,
             )
         );
+
+        $owner = get_role( 'vri_community_owner' );
+        if ( $owner ) {
+            $owner->remove_cap( 'upload_files' );
+            foreach ( array(
+                'read',
+                'vri_manage_community',
+                'vri_manage_events',
+                'vri_vote_applications',
+                'vri_vote_slots',
+            ) as $cap ) {
+                $owner->add_cap( $cap );
+            }
+        }
 
         $admin = get_role( 'administrator' );
         if ( $admin ) {
