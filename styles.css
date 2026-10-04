@@ -2738,3 +2738,201 @@ html[data-theme="light"] #events-calendar .fc-daygrid-day,
 html[data-theme="light"] #events-calendar .fc-daygrid-day-frame {
   background: var(--fc-classic-background) !important;
 }
+
+
+/* Home events teaser */
+.home-events-section {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+.home-events-panel {
+  display: grid;
+  grid-template-columns: minmax(0,.88fr) minmax(430px,1.12fr);
+  gap: clamp(42px,7vw,88px);
+  align-items: center;
+}
+
+.home-events-copy h2 {
+  margin: 12px 0 22px;
+  font-size: clamp(2.6rem,5vw,4.8rem);
+  line-height: .96;
+  letter-spacing: -.055em;
+}
+
+.home-events-copy > p {
+  max-width: 650px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.home-events-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  margin-top: 28px;
+}
+
+.home-events-actions > span {
+  color: var(--muted);
+  font-size: .76rem;
+}
+
+.home-events-preview {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
+    #0d110e;
+  box-shadow: var(--shadow);
+  transition: transform .25s var(--ease), border-color .25s ease;
+}
+
+.home-events-preview:hover {
+  transform: translateY(-5px);
+  border-color: rgba(19,138,75,.40);
+}
+
+.home-events-preview__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.home-events-preview__top span {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.home-events-preview__top strong {
+  font-size: .86rem;
+}
+
+.home-events-preview__week,
+.home-events-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+}
+
+.home-events-preview__week {
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,.022);
+}
+
+.home-events-preview__week span {
+  padding: 10px 4px;
+  color: var(--muted);
+  font-size: .58rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.home-events-preview__grid {
+  min-height: 240px;
+}
+
+.home-events-preview__grid > span {
+  position: relative;
+  min-height: 80px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.home-events-preview__grid > span:nth-child(7n) {
+  border-right: 0;
+}
+
+.home-events-preview__grid .has-event::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 20px;
+  height: 7px;
+  border-radius: 999px;
+}
+
+.home-events-preview__grid .event-green::before {
+  background: #27a866;
+  box-shadow: 0 0 16px rgba(39,168,102,.24);
+}
+
+.home-events-preview__grid .event-blue::before {
+  background: #4ea1ff;
+  box-shadow: 0 0 16px rgba(78,161,255,.22);
+}
+
+.home-events-preview__grid .event-red::before {
+  background: #d94b45;
+  box-shadow: 0 0 16px rgba(217,75,69,.22);
+}
+
+.home-events-preview__footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  padding: 16px 20px;
+}
+
+.home-events-preview__footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: .68rem;
+}
+
+.home-events-preview__footer strong {
+  margin-left: auto;
+  color: var(--text);
+  font-size: .74rem;
+}
+
+html[data-theme="light"] .home-events-preview {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.94), rgba(247,245,239,.92)),
+    #fff;
+}
+
+html[data-theme="light"] .home-events-preview__week {
+  background: #f0ede5;
+}
+
+@media (max-width: 900px) {
+  .home-events-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-events-section {
+    padding-top: 78px;
+    padding-bottom: 78px;
+  }
+
+  .home-events-preview__grid {
+    min-height: 180px;
+  }
+
+  .home-events-preview__grid > span {
+    min-height: 60px;
+  }
+
+  .home-events-preview__footer strong {
+    width: 100%;
+    margin-left: 0;
+  }
+}
