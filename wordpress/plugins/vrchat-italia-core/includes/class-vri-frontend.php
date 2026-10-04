@@ -208,7 +208,7 @@ final class VRI_Frontend {
 
     private static function require_owner() {
         if ( ! is_user_logged_in() || ! current_user_can( 'vri_manage_community' ) ) {
-            wp_die( esc_html__( 'Not authorized.', 'vrchat-italia' ), 403 );
+            wp_die( esc_html__( 'Not authorized.', 'vrchat-italia' ), '', array( 'response' => 403 ) );
         }
     }
 
