@@ -326,6 +326,7 @@
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     locale,
+    colorScheme: document.documentElement.getAttribute('data-color-scheme') || 'dark',
     timeZone: 'Europe/Rome',
     initialView: 'dayGridMonth',
     firstDay: 1,
@@ -364,6 +365,12 @@
   });
 
   calendar.render();
+
+  document.addEventListener('vri-theme-change', event => {
+    if (event.detail?.theme) {
+      calendar.setOption('colorScheme', event.detail.theme);
+    }
+  });
 
   const applyFilters = () => {
     calendar.removeAllEvents();
