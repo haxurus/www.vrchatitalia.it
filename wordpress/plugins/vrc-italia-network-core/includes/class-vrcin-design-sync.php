@@ -1,8 +1,8 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-final class VRI_Design_Sync {
-    const OPTION = 'vri_design_source';
+final class VRCIN_Design_Sync {
+    const OPTION = 'vrcin_design_source';
     const MAX_FILES = 500;
     const MAX_FILE_SIZE = 5242880;
     const MAX_TOTAL = 31457280;
@@ -16,7 +16,7 @@ final class VRI_Design_Sync {
         return wp_parse_args(
             is_array( $value ) ? $value : array(),
             array(
-                'repository' => 'haxurus/www.vrchatitalia.it',
+                'repository' => 'haxurus/www.vrcitalianetwork.it',
                 'branch' => 'main',
                 'prefix' => 'wordpress/design',
                 'active_commit' => '',
@@ -30,7 +30,7 @@ final class VRI_Design_Sync {
         $value = preg_replace( '~^https://github\.com/~i', '', $value );
         $value = preg_replace( '~\.git$~i', '', $value );
         if ( ! preg_match( '~^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$~D', $value ) ) {
-            return new WP_Error( 'vri_repo', 'Use owner/repository or a public github.com repository URL.' );
+            return new WP_Error( 'vrcin_repo', 'Use owner/repository or a public github.com repository URL.' );
         }
         return $value;
     }
@@ -41,7 +41,7 @@ final class VRI_Design_Sync {
             $value = 'main';
         }
         if ( strlen( $value ) > 180 || ! preg_match( '~^[A-Za-z0-9._/-]+$~D', $value ) || false !== strpos( $value, '..' ) ) {
-            return new WP_Error( 'vri_branch', 'Invalid branch.' );
+            return new WP_Error( 'vrcin_branch', 'Invalid branch.' );
         }
         return $value;
     }
@@ -49,7 +49,7 @@ final class VRI_Design_Sync {
     private static function validate_prefix( $value ) {
         $value = trim( str_replace( '\\', '/', (string) $value ), '/' );
         if ( ! preg_match( '~^[A-Za-z0-9._/-]+$~D', $value ) || false !== strpos( $value, '..' ) ) {
-            return new WP_Error( 'vri_prefix', 'Invalid design source path.' );
+            return new WP_Error( 'vrcin_prefix', 'Invalid design source path.' );
         }
         return $value;
     }
@@ -62,7 +62,7 @@ final class VRI_Design_Sync {
                 'redirection' => 2,
                 'headers' => array(
                     'Accept' => 'application/vnd.github+json',
-                    'User-Agent' => 'VRChat-Italia-Design-Sync/' . VRI_CORE_VERSION,
+                    'User-Agent' => 'VRC-Italia-Network-Design-Sync/' . VRCIN_CORE_VERSION,
                 ),
             )
         );
@@ -71,10 +71,10 @@ final class VRI_Design_Sync {
         }
         $code = (int) wp_remote_retrieve_response_code( $response );
         if ( $code < 200 || $code >= 300 ) {
-            return new WP_Error( 'vri_github', 'GitHub returned HTTP ' . $code . '.' );
+            return new WP_Error( 'vrcin_github', 'GitHub returned HTTP ' . $code . '.' );
         }
         $data = json_decode( wp_remote_retrieve_body( $response ), true );
-        return is_array( $data ) ? $data : new WP_Error( 'vri_github_json', 'Invalid GitHub response.' );
+        return is_array( $data ) ? $data : new WP_Error( 'vrcin_github_json', 'Invalid GitHub response.' );
     }
 
     public static function manifest( $settings = null ) {
@@ -94,7 +94,7 @@ final class VRI_Design_Sync {
         }
         $sha = $commit['sha'] ?? '';
         if ( ! preg_match( '/^[a-f0-9]{40}$/D', $sha ) ) {
-            return new WP_Error( 'vri_commit', 'Could not resolve repository commit.' );
+            return new WP_Error( 'vrcin_commit', 'Could not resolve repository commit.' );
         }
 
         $tree = self::api_get( 'https://api.github.com/repos/' . $repo . '/git/trees/' . $sha . '?recursive=1' );
@@ -102,7 +102,7 @@ final class VRI_Design_Sync {
             return $tree;
         }
         if ( ! empty( $tree['truncated'] ) ) {
-            return new WP_Error( 'vri_tree', 'Repository tree is too large or incomplete.' );
+            return new WP_Error( 'vrcin_tree', 'Repository tree is too large or incomplete.' );
         }
 
         $allowed = array( 'css', 'js', 'svg', 'png', 'jpg', 'jpeg', 'webp', 'gif' );
@@ -120,7 +120,7 @@ final class VRI_Design_Sync {
             }
             $relative = substr( $path, strlen( $needle ) );
             if ( ! $relative || false !== strpos( $relative, '..' ) || 0 === strpos( $relative, '/' ) ) {
-                return new WP_Error( 'vri_path', 'Unsafe repository path.' );
+                return new WP_Error( 'vrcin_path', 'Unsafe repository path.' );
             }
             $ext = strtolower( pathinfo( $relative, PATHINFO_EXTENSION ) );
             if ( ! in_array( $ext, $allowed, true ) ) {
@@ -128,11 +128,11 @@ final class VRI_Design_Sync {
             }
             $size = (int) ( $entry['size'] ?? 0 );
             if ( $size < 0 || $size > self::MAX_FILE_SIZE ) {
-                return new WP_Error( 'vri_size', 'A design asset exceeds the per-file limit.' );
+                return new WP_Error( 'vrcin_size', 'A design asset exceeds the per-file limit.' );
             }
             $total += $size;
             if ( $total > self::MAX_TOTAL || count( $files ) >= self::MAX_FILES ) {
-                return new WP_Error( 'vri_limit', 'Design source exceeds synchronization safety limits.' );
+                return new WP_Error( 'vrcin_limit', 'Design source exceeds synchronization safety limits.' );
             }
             $files[ $relative ] = array(
                 'repository_path' => $path,
@@ -142,7 +142,7 @@ final class VRI_Design_Sync {
         }
 
         if ( ! isset( $files['site.css'] ) || ! isset( $files['site.js'] ) ) {
-            return new WP_Error( 'vri_required', 'The design source must contain site.css and site.js.' );
+            return new WP_Error( 'vrcin_required', 'The design source must contain site.css and site.js.' );
         }
 
         return array(
@@ -157,8 +157,8 @@ final class VRI_Design_Sync {
 
     private static function roots() {
         $uploads = wp_upload_dir();
-        $base = trailingslashit( $uploads['basedir'] ) . 'vrchat-italia-design';
-        $url = trailingslashit( $uploads['baseurl'] ) . 'vrchat-italia-design';
+        $base = trailingslashit( $uploads['basedir'] ) . 'vrc-italia-network-design';
+        $url = trailingslashit( $uploads['baseurl'] ) . 'vrc-italia-network-design';
         return array( $base, $url );
     }
 
@@ -203,7 +203,7 @@ final class VRI_Design_Sync {
         $final = $snapshots . '/' . $manifest['commit'];
 
         if ( ! self::safe_mkdir( $root ) || ! self::safe_mkdir( $snapshots ) || ! self::safe_mkdir( $stage ) ) {
-            return new WP_Error( 'vri_write', 'Cannot create design synchronization directory.' );
+            return new WP_Error( 'vrcin_write', 'Cannot create design synchronization directory.' );
         }
 
         foreach ( $manifest['files'] as $relative => $info ) {
@@ -211,7 +211,7 @@ final class VRI_Design_Sync {
             $dir = dirname( $target );
             if ( ! self::safe_mkdir( $dir ) ) {
                 self::delete_tree( $stage );
-                return new WP_Error( 'vri_write', 'Cannot create a design asset directory.' );
+                return new WP_Error( 'vrcin_write', 'Cannot create a design asset directory.' );
             }
 
             $url = 'https://raw.githubusercontent.com/' . $manifest['repository'] . '/' . $manifest['commit'] . '/' . str_replace( '%2F', '/', rawurlencode( $info['repository_path'] ) );
@@ -221,26 +221,26 @@ final class VRI_Design_Sync {
                     'timeout' => 30,
                     'redirection' => 2,
                     'limit_response_size' => self::MAX_FILE_SIZE + 1,
-                    'headers' => array( 'User-Agent' => 'VRChat-Italia-Design-Sync/' . VRI_CORE_VERSION ),
+                    'headers' => array( 'User-Agent' => 'VRC-Italia-Network-Design-Sync/' . VRCIN_CORE_VERSION ),
                 )
             );
             if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
                 self::delete_tree( $stage );
-                return is_wp_error( $response ) ? $response : new WP_Error( 'vri_download', 'Could not download ' . $relative );
+                return is_wp_error( $response ) ? $response : new WP_Error( 'vrcin_download', 'Could not download ' . $relative );
             }
             $body = wp_remote_retrieve_body( $response );
             if ( strlen( $body ) > self::MAX_FILE_SIZE || ( $info['size'] && strlen( $body ) !== (int) $info['size'] ) ) {
                 self::delete_tree( $stage );
-                return new WP_Error( 'vri_integrity', 'Unexpected size for ' . $relative );
+                return new WP_Error( 'vrcin_integrity', 'Unexpected size for ' . $relative );
             }
             $blob_sha = sha1( 'blob ' . strlen( $body ) . "\0" . $body );
             if ( ! empty( $info['sha'] ) && ! hash_equals( strtolower( $info['sha'] ), strtolower( $blob_sha ) ) ) {
                 self::delete_tree( $stage );
-                return new WP_Error( 'vri_integrity', 'Git blob hash mismatch for ' . $relative );
+                return new WP_Error( 'vrcin_integrity', 'Git blob hash mismatch for ' . $relative );
             }
             if ( false === file_put_contents( $target, $body, LOCK_EX ) ) {
                 self::delete_tree( $stage );
-                return new WP_Error( 'vri_write', 'Could not write ' . $relative );
+                return new WP_Error( 'vrcin_write', 'Could not write ' . $relative );
             }
         }
 
@@ -248,7 +248,7 @@ final class VRI_Design_Sync {
             self::delete_tree( $stage );
         } elseif ( ! @rename( $stage, $final ) ) {
             self::delete_tree( $stage );
-            return new WP_Error( 'vri_publish', 'Could not publish the staged design snapshot.' );
+            return new WP_Error( 'vrcin_publish', 'Could not publish the staged design snapshot.' );
         }
 
         $settings = self::settings();
@@ -299,36 +299,36 @@ final class VRI_Design_Sync {
     }
 
     public static function handle_admin_actions() {
-        if ( ! isset( $_POST['vri_design_action'] ) || ! current_user_can( 'manage_options' ) ) {
+        if ( ! isset( $_POST['vrcin_design_action'] ) || ! current_user_can( 'manage_options' ) ) {
             return;
         }
-        check_admin_referer( 'vri_design_sync' );
+        check_admin_referer( 'vrcin_design_sync' );
 
-        $action = sanitize_key( $_POST['vri_design_action'] );
+        $action = sanitize_key( $_POST['vrcin_design_action'] );
         if ( 'save' === $action ) {
             $repo = self::validate_repository( wp_unslash( $_POST['repository'] ?? '' ) );
             $branch = self::validate_branch( wp_unslash( $_POST['branch'] ?? '' ) );
             $prefix = self::validate_prefix( wp_unslash( $_POST['prefix'] ?? '' ) );
             if ( is_wp_error( $repo ) || is_wp_error( $branch ) || is_wp_error( $prefix ) ) {
                 $error = is_wp_error( $repo ) ? $repo : ( is_wp_error( $branch ) ? $branch : $prefix );
-                set_transient( 'vri_design_notice_' . get_current_user_id(), array( 'error', $error->get_error_message() ), 60 );
+                set_transient( 'vrcin_design_notice_' . get_current_user_id(), array( 'error', $error->get_error_message() ), 60 );
             } else {
                 $check = self::manifest( array( 'repository' => $repo, 'branch' => $branch, 'prefix' => $prefix ) );
                 if ( is_wp_error( $check ) ) {
-                    set_transient( 'vri_design_notice_' . get_current_user_id(), array( 'error', $check->get_error_message() ), 60 );
+                    set_transient( 'vrcin_design_notice_' . get_current_user_id(), array( 'error', $check->get_error_message() ), 60 );
                 } else {
                     $settings = self::settings();
                     $settings['repository'] = $repo;
                     $settings['branch'] = $branch;
                     $settings['prefix'] = $prefix;
                     update_option( self::OPTION, $settings, false );
-                    set_transient( 'vri_design_notice_' . get_current_user_id(), array( 'success', 'Repository verified and saved. The live design has not changed.' ), 60 );
+                    set_transient( 'vrcin_design_notice_' . get_current_user_id(), array( 'success', 'Repository verified and saved. The live design has not changed.' ), 60 );
                 }
             }
         } elseif ( 'sync' === $action ) {
             $result = self::synchronize();
             set_transient(
-                'vri_design_notice_' . get_current_user_id(),
+                'vrcin_design_notice_' . get_current_user_id(),
                 is_wp_error( $result )
                     ? array( 'error', $result->get_error_message() )
                     : array( 'success', 'Design synchronized at commit ' . $result['commit'] . '.' ),
@@ -337,7 +337,7 @@ final class VRI_Design_Sync {
         } elseif ( 'check' === $action ) {
             $result = self::manifest();
             set_transient(
-                'vri_design_notice_' . get_current_user_id(),
+                'vrcin_design_notice_' . get_current_user_id(),
                 is_wp_error( $result )
                     ? array( 'error', $result->get_error_message() )
                     : array( 'success', 'Available commit: ' . $result['commit'] . ' - ' . count( $result['files'] ) . ' assets.' ),
@@ -345,7 +345,7 @@ final class VRI_Design_Sync {
             );
         }
 
-        wp_safe_redirect( admin_url( 'admin.php?page=vri-design' ) );
+        wp_safe_redirect( admin_url( 'admin.php?page=vrcin-design' ) );
         exit;
     }
 
@@ -354,10 +354,10 @@ final class VRI_Design_Sync {
             return;
         }
         $settings = self::settings();
-        $notice = get_transient( 'vri_design_notice_' . get_current_user_id() );
-        delete_transient( 'vri_design_notice_' . get_current_user_id() );
+        $notice = get_transient( 'vrcin_design_notice_' . get_current_user_id() );
+        delete_transient( 'vrcin_design_notice_' . get_current_user_id() );
         ?>
-        <div class="wrap vri-admin">
+        <div class="wrap vrcin-admin">
             <h1>VRC Italia Network - Design Sync</h1>
             <p>Sincronizza manualmente solo gli asset di design approvati dal repository GitHub. Database, utenti, community, voti, eventi e upload non vengono mai toccati.</p>
 
@@ -365,12 +365,12 @@ final class VRI_Design_Sync {
                 <div class="notice notice-<?php echo 'error' === $notice[0] ? 'error' : 'success'; ?> inline"><p><?php echo esc_html( $notice[1] ); ?></p></div>
             <?php endif; ?>
 
-            <div class="vri-admin-panel">
+            <div class="vrcin-admin-panel">
                 <h2>Repository source</h2>
                 <form method="post">
-                    <?php wp_nonce_field( 'vri_design_sync' ); ?>
-                    <input type="hidden" name="vri_design_action" value="save">
-                    <div class="vri-admin-form-grid">
+                    <?php wp_nonce_field( 'vrcin_design_sync' ); ?>
+                    <input type="hidden" name="vrcin_design_action" value="save">
+                    <div class="vrcin-admin-form-grid">
                         <label>Public GitHub repository<input name="repository" value="<?php echo esc_attr( $settings['repository'] ); ?>" required></label>
                         <label>Branch<input name="branch" value="<?php echo esc_attr( $settings['branch'] ); ?>" required></label>
                         <label>Design path<input name="prefix" value="<?php echo esc_attr( $settings['prefix'] ); ?>" required></label>
@@ -380,11 +380,11 @@ final class VRI_Design_Sync {
                 <p><strong>Commit attivo:</strong> <code><?php echo esc_html( $settings['active_commit'] ?: 'nessuno - usa gli asset inclusi nel tema' ); ?></code></p>
             </div>
 
-            <div class="vri-admin-panel">
+            <div class="vrcin-admin-panel">
                 <h2>Aggiornamento manuale</h2>
-                <div class="vri-row-actions">
-                    <form method="post"><?php wp_nonce_field( 'vri_design_sync' ); ?><input type="hidden" name="vri_design_action" value="check"><button class="button" type="submit">Controlla aggiornamenti</button></form>
-                    <form method="post" onsubmit="return confirm('Sincronizzare il nuovo design da GitHub?')"><?php wp_nonce_field( 'vri_design_sync' ); ?><input type="hidden" name="vri_design_action" value="sync"><button class="button button-primary" type="submit">Sincronizza design</button></form>
+                <div class="vrcin-row-actions">
+                    <form method="post"><?php wp_nonce_field( 'vrcin_design_sync' ); ?><input type="hidden" name="vrcin_design_action" value="check"><button class="button" type="submit">Controlla aggiornamenti</button></form>
+                    <form method="post" onsubmit="return confirm('Sincronizzare il nuovo design da GitHub?')"><?php wp_nonce_field( 'vrcin_design_sync' ); ?><input type="hidden" name="vrcin_design_action" value="sync"><button class="button button-primary" type="submit">Sincronizza design</button></form>
                 </div>
                 <p class="description">La sincronizzazione crea prima uno snapshot completo e lo rende attivo solo dopo aver scaricato e verificato tutti i file. Sono consentiti esclusivamente CSS, JavaScript e asset grafici nella cartella configurata. PHP remoto non viene mai eseguito o copiato.</p>
             </div>

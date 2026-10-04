@@ -95,7 +95,7 @@ const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
 function getStoredTheme() {
   try {
-    return localStorage.getItem('vri-theme') === 'light' ? 'light' : 'dark';
+    return localStorage.getItem('vrcin-theme') === 'light' ? 'light' : 'dark';
   } catch (error) {
     return 'dark';
   }
@@ -115,7 +115,7 @@ function applyTheme(theme, persist = false) {
 
   if (persist) {
     try {
-      localStorage.setItem('vri-theme', nextTheme);
+      localStorage.setItem('vrcin-theme', nextTheme);
     } catch (error) {}
   }
 
@@ -135,7 +135,7 @@ function applyTheme(theme, persist = false) {
     themeColorMeta.setAttribute('content', isLight ? '#f4f1e8' : '#090b12');
   }
 
-  document.dispatchEvent(new CustomEvent('vri-theme-change', {
+  document.dispatchEvent(new CustomEvent('vrcin-theme-change', {
     detail: { theme: nextTheme }
   }));
 }

@@ -1,21 +1,21 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-final class VRI_Install {
+final class VRCIN_Install {
     public static function activate() {
         self::schema();
         self::roles();
         self::defaults();
-        VRI_Frontend::rewrite_rules();
+        VRCIN_Frontend::rewrite_rules();
         flush_rewrite_rules();
 
-        if ( ! wp_next_scheduled( 'vri_process_slot_timeouts' ) ) {
-            wp_schedule_event( time() + HOUR_IN_SECONDS, 'hourly', 'vri_process_slot_timeouts' );
+        if ( ! wp_next_scheduled( 'vrcin_process_slot_timeouts' ) ) {
+            wp_schedule_event( time() + HOUR_IN_SECONDS, 'hourly', 'vrcin_process_slot_timeouts' );
         }
     }
 
     public static function deactivate() {
-        wp_clear_scheduled_hook( 'vri_process_slot_timeouts' );
+        wp_clear_scheduled_hook( 'vrcin_process_slot_timeouts' );
         flush_rewrite_rules();
     }
 
@@ -28,7 +28,7 @@ final class VRI_Install {
 
         $sql = array();
 
-        $sql[] = "CREATE TABLE {$p}vri_communities (
+        $sql[] = "CREATE TABLE {$p}vrcin_communities (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             owner_user_id bigint(20) unsigned DEFAULT NULL,
             name varchar(191) NOT NULL,
@@ -51,7 +51,7 @@ final class VRI_Install {
             KEY status (status)
         ) {$charset};";
 
-        $sql[] = "CREATE TABLE {$p}vri_community_images (
+        $sql[] = "CREATE TABLE {$p}vrcin_community_images (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             community_id bigint(20) unsigned NOT NULL,
             attachment_id bigint(20) unsigned NOT NULL,
@@ -65,7 +65,7 @@ final class VRI_Install {
             KEY community_status (community_id,status)
         ) {$charset};";
 
-        $sql[] = "CREATE TABLE {$p}vri_applications (
+        $sql[] = "CREATE TABLE {$p}vrcin_applications (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             email varchar(190) NOT NULL,
             community_name varchar(191) NOT NULL,
@@ -87,7 +87,7 @@ final class VRI_Install {
             KEY status (status)
         ) {$charset};";
 
-        $sql[] = "CREATE TABLE {$p}vri_application_votes (
+        $sql[] = "CREATE TABLE {$p}vrcin_application_votes (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             application_id bigint(20) unsigned NOT NULL,
             voter_user_id bigint(20) unsigned NOT NULL,
@@ -99,7 +99,7 @@ final class VRI_Install {
             KEY application_id (application_id)
         ) {$charset};";
 
-        $sql[] = "CREATE TABLE {$p}vri_events (
+        $sql[] = "CREATE TABLE {$p}vrcin_events (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             community_id bigint(20) unsigned NOT NULL,
             title_it varchar(191) NOT NULL DEFAULT '',
@@ -133,7 +133,7 @@ final class VRI_Install {
             KEY pending_status (pending_status)
         ) {$charset};";
 
-        $sql[] = "CREATE TABLE {$p}vri_slot_requests (
+        $sql[] = "CREATE TABLE {$p}vrcin_slot_requests (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             event_id bigint(20) unsigned NOT NULL,
             community_id bigint(20) unsigned NOT NULL,
@@ -147,7 +147,7 @@ final class VRI_Install {
             KEY status_expires (status,expires_at)
         ) {$charset};";
 
-        $sql[] = "CREATE TABLE {$p}vri_slot_votes (
+        $sql[] = "CREATE TABLE {$p}vrcin_slot_votes (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             request_id bigint(20) unsigned NOT NULL,
             voter_user_id bigint(20) unsigned NOT NULL,
@@ -163,31 +163,31 @@ final class VRI_Install {
             dbDelta( $statement );
         }
 
-        update_option( 'vri_db_version', VRI_CORE_VERSION, false );
+        update_option( 'vrcin_db_version', VRCIN_CORE_VERSION, false );
     }
 
     private static function roles() {
         add_role(
-            'vri_community_owner',
+            'vrcin_community_owner',
             'VRC Italia Network - Community Owner',
             array(
                 'read' => true,
-                'vri_manage_community' => true,
-                'vri_manage_events' => true,
-                'vri_vote_applications' => true,
-                'vri_vote_slots' => true,
+                'vrcin_manage_community' => true,
+                'vrcin_manage_events' => true,
+                'vrcin_vote_applications' => true,
+                'vrcin_vote_slots' => true,
             )
         );
 
-        $owner = get_role( 'vri_community_owner' );
+        $owner = get_role( 'vrcin_community_owner' );
         if ( $owner ) {
             $owner->remove_cap( 'upload_files' );
             foreach ( array(
                 'read',
-                'vri_manage_community',
-                'vri_manage_events',
-                'vri_vote_applications',
-                'vri_vote_slots',
+                'vrcin_manage_community',
+                'vrcin_manage_events',
+                'vrcin_vote_applications',
+                'vrcin_vote_slots',
             ) as $cap ) {
                 $owner->add_cap( $cap );
             }
@@ -196,13 +196,13 @@ final class VRI_Install {
         $admin = get_role( 'administrator' );
         if ( $admin ) {
             foreach ( array(
-                'vri_manage_community',
-                'vri_manage_events',
-                'vri_vote_applications',
-                'vri_vote_slots',
-                'vri_moderate',
-                'vri_manage_form',
-                'vri_sync_design',
+                'vrcin_manage_community',
+                'vrcin_manage_events',
+                'vrcin_vote_applications',
+                'vrcin_vote_slots',
+                'vrcin_moderate',
+                'vrcin_manage_form',
+                'vrcin_sync_design',
             ) as $cap ) {
                 $admin->add_cap( $cap );
             }
@@ -210,9 +210,9 @@ final class VRI_Install {
     }
 
     private static function defaults() {
-        if ( false === get_option( 'vri_form_fields', false ) ) {
+        if ( false === get_option( 'vrcin_form_fields', false ) ) {
             update_option(
-                'vri_form_fields',
+                'vrcin_form_fields',
                 array(
                     array( 'key' => 'community_name', 'type' => 'text', 'label_it' => 'Nome community', 'label_en' => 'Community name', 'required' => true, 'locked' => true ),
                     array( 'key' => 'owner_email', 'type' => 'email', 'label_it' => 'Email del proprietario', 'label_en' => 'Owner email', 'required' => true, 'locked' => true ),
@@ -230,9 +230,9 @@ final class VRI_Install {
             );
         }
 
-        if ( false === get_option( 'vri_form_settings', false ) ) {
+        if ( false === get_option( 'vrcin_form_settings', false ) ) {
             update_option(
-                'vri_form_settings',
+                'vrcin_form_settings',
                 array(
                     'title_it' => 'Candidatura community',
                     'title_en' => 'Community application',
@@ -257,11 +257,11 @@ final class VRI_Install {
             );
         }
 
-        if ( false === get_option( 'vri_design_source', false ) ) {
+        if ( false === get_option( 'vrcin_design_source', false ) ) {
             update_option(
-                'vri_design_source',
+                'vrcin_design_source',
                 array(
-                    'repository' => 'haxurus/www.vrchatitalia.it',
+                    'repository' => 'haxurus/www.vrcitalianetwork.it',
                     'branch' => 'main',
                     'prefix' => 'wordpress/design',
                     'active_commit' => '',

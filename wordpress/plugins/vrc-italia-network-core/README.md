@@ -24,4 +24,4 @@ All operational data stays in WordPress. The GitHub design synchronizer never de
 
 ## Required companion theme
 
-Use with `wordpress/theme/vrchat-italia`.
+Use with `wordpress/theme/vrc-italia-network`.

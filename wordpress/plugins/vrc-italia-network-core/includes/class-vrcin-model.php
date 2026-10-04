@@ -1,27 +1,27 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-final class VRI_Model {
+final class VRCIN_Model {
     const TZ = 'Europe/Rome';
     const APPLICATION_VERIFY_HOURS = 48;
     const SLOT_VOTE_HOURS = 48;
 
     public static function hooks() {
-        add_action( 'vri_process_slot_timeouts', array( __CLASS__, 'process_slot_timeouts' ) );
+        add_action( 'vrcin_process_slot_timeouts', array( __CLASS__, 'process_slot_timeouts' ) );
         add_action( 'init', array( __CLASS__, 'maybe_process_slot_timeouts' ), 20 );
     }
 
     public static function maybe_process_slot_timeouts() {
-        if ( get_transient( 'vri_slot_timeout_lock' ) ) {
+        if ( get_transient( 'vrcin_slot_timeout_lock' ) ) {
             return;
         }
-        set_transient( 'vri_slot_timeout_lock', 1, 5 * MINUTE_IN_SECONDS );
+        set_transient( 'vrcin_slot_timeout_lock', 1, 5 * MINUTE_IN_SECONDS );
         self::process_slot_timeouts();
     }
 
     private static function table( $name ) {
         global $wpdb;
-        return $wpdb->prefix . 'vri_' . $name;
+        return $wpdb->prefix . 'vrcin_' . $name;
     }
 
     private static function now() {
@@ -134,12 +134,12 @@ final class VRI_Model {
         global $wpdb;
         $community = self::get_community( $community_id );
         if ( ! $community || (int) $community['owner_user_id'] !== (int) $user_id ) {
-            return new WP_Error( 'vri_forbidden', 'Community not available.' );
+            return new WP_Error( 'vrcin_forbidden', 'Community not available.' );
         }
 
         $name = sanitize_text_field( $data['name'] ?? '' );
         if ( '' === $name ) {
-            return new WP_Error( 'vri_name', 'Community name is required.' );
+            return new WP_Error( 'vrcin_name', 'Community name is required.' );
         }
 
         $description_it = mb_substr( sanitize_textarea_field( $data['description_it'] ?? '' ), 0, 250 );
@@ -165,14 +165,14 @@ final class VRI_Model {
         }
 
         $ok = $wpdb->update( self::table( 'communities' ), $update, array( 'id' => absint( $community_id ) ) );
-        return false === $ok ? new WP_Error( 'vri_db', 'Could not update the community.' ) : true;
+        return false === $ok ? new WP_Error( 'vrcin_db', 'Could not update the community.' ) : true;
     }
 
     public static function add_gallery_image( $community_id, $user_id, $attachment_id ) {
         global $wpdb;
         $community = self::get_community( $community_id );
         if ( ! $community || (int) $community['owner_user_id'] !== (int) $user_id ) {
-            return new WP_Error( 'vri_forbidden', 'Community not available.' );
+            return new WP_Error( 'vrcin_forbidden', 'Community not available.' );
         }
 
         $count = (int) $wpdb->get_var(
@@ -182,7 +182,7 @@ final class VRI_Model {
             )
         );
         if ( $count >= 10 ) {
-            return new WP_Error( 'vri_gallery_limit', 'Maximum 10 images per community.' );
+            return new WP_Error( 'vrcin_gallery_limit', 'Maximum 10 images per community.' );
         }
 
         $ok = $wpdb->insert(
@@ -195,7 +195,7 @@ final class VRI_Model {
                 'created_at' => self::now(),
             )
         );
-        return $ok ? true : new WP_Error( 'vri_db', 'Could not save the image.' );
+        return $ok ? true : new WP_Error( 'vrcin_db', 'Could not save the image.' );
     }
 
     public static function delete_gallery_image( $image_id, $user_id ) {
@@ -210,7 +210,7 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $row || (int) $row['owner_user_id'] !== (int) $user_id ) {
-            return new WP_Error( 'vri_forbidden', 'Image not available.' );
+            return new WP_Error( 'vrcin_forbidden', 'Image not available.' );
         }
         $wpdb->delete( self::table( 'community_images' ), array( 'id' => absint( $image_id ) ) );
         wp_delete_attachment( absint( $row['attachment_id'] ), true );
@@ -248,10 +248,10 @@ final class VRI_Model {
         $community_name = sanitize_text_field( $payload['community_name'] ?? '' );
 
         if ( ! is_email( $email ) ) {
-            return new WP_Error( 'vri_email', 'Enter a valid email address.' );
+            return new WP_Error( 'vrcin_email', 'Enter a valid email address.' );
         }
         if ( '' === $community_name ) {
-            return new WP_Error( 'vri_name', 'Community name is required.' );
+            return new WP_Error( 'vrcin_name', 'Community name is required.' );
         }
 
         $payload['_lang'] = 'it' === $lang ? 'it' : 'en';
@@ -260,10 +260,10 @@ final class VRI_Model {
         $events = isset( $payload['italian_events_percent'] ) ? (float) $payload['italian_events_percent'] : 0;
         $lobbies = isset( $payload['lobbies_last_7_days'] ) ? (int) $payload['lobbies_last_7_days'] : 0;
         if ( $members < 80 || $events < 80 || $lobbies < 5 ) {
-            return new WP_Error( 'vri_requirements', 'The minimum project requirements are not met.' );
+            return new WP_Error( 'vrcin_requirements', 'The minimum project requirements are not met.' );
         }
         if ( empty( $payload['discord_url'] ) && empty( $payload['instagram_url'] ) && empty( $payload['website_url'] ) && empty( $payload['vrchat_group_url'] ) ) {
-            return new WP_Error( 'vri_contacts', 'At least one verifiable official contact is required.' );
+            return new WP_Error( 'vrcin_contacts', 'At least one verifiable official contact is required.' );
         }
 
         $existing = $wpdb->get_row(
@@ -285,7 +285,7 @@ final class VRI_Model {
                     array( 'id' => absint( $existing['id'] ) )
                 );
             } else {
-                return new WP_Error( 'vri_duplicate', 'An application for this email or community is already active.' );
+                return new WP_Error( 'vrcin_duplicate', 'An application for this email or community is already active.' );
             }
         }
 
@@ -306,14 +306,14 @@ final class VRI_Model {
             )
         );
         if ( ! $ok ) {
-            return new WP_Error( 'vri_db', 'Could not save the application.' );
+            return new WP_Error( 'vrcin_db', 'Could not save the application.' );
         }
 
         $id = (int) $wpdb->insert_id;
         $url = add_query_arg(
             array(
-                'vri_verify' => rawurlencode( $token ),
-                'vri_application' => $id,
+                'vrcin_verify' => rawurlencode( $token ),
+                'vrcin_application' => $id,
                 'lang' => 'it' === $lang ? 'it' : 'en',
             ),
             home_url( '/' )
@@ -335,14 +335,14 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $application || 'pending_email' !== $application['status'] ) {
-            return new WP_Error( 'vri_application', 'Application is not available for verification.' );
+            return new WP_Error( 'vrcin_application', 'Application is not available for verification.' );
         }
         if ( empty( $application['verification_expires_at'] ) || strtotime( $application['verification_expires_at'] . ' UTC' ) < time() ) {
-            return new WP_Error( 'vri_expired', 'Verification link expired.' );
+            return new WP_Error( 'vrcin_expired', 'Verification link expired.' );
         }
         $hash = hash_hmac( 'sha256', (string) $token, wp_salt( 'auth' ) );
         if ( ! hash_equals( $application['verification_token_hash'], $hash ) ) {
-            return new WP_Error( 'vri_token', 'Invalid verification link.' );
+            return new WP_Error( 'vrcin_token', 'Invalid verification link.' );
         }
 
         $voters = self::owner_ids();
@@ -400,7 +400,7 @@ final class VRI_Model {
         $length = function_exists( 'mb_strlen' ) ? mb_strlen( $comment ) : strlen( $comment );
 
         if ( ! $vote || $length < 10 || $length > 250 ) {
-            return new WP_Error( 'vri_vote', 'Vote and comment are required. Comment length: 10-250 characters.' );
+            return new WP_Error( 'vrcin_vote', 'Vote and comment are required. Comment length: 10-250 characters.' );
         }
 
         $application = $wpdb->get_row(
@@ -408,12 +408,12 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $application || 'voting' !== $application['status'] ) {
-            return new WP_Error( 'vri_application', 'Application is not open for voting.' );
+            return new WP_Error( 'vrcin_application', 'Application is not open for voting.' );
         }
 
         $eligible = array_map( 'absint', self::decode( $application['eligible_voters'] ) );
         if ( ! in_array( absint( $user_id ), $eligible, true ) ) {
-            return new WP_Error( 'vri_forbidden', 'You cannot vote on this application.' );
+            return new WP_Error( 'vrcin_forbidden', 'You cannot vote on this application.' );
         }
 
         $exists = $wpdb->get_var(
@@ -424,7 +424,7 @@ final class VRI_Model {
             )
         );
         if ( $exists ) {
-            return new WP_Error( 'vri_voted', 'You have already voted.' );
+            return new WP_Error( 'vrcin_voted', 'You have already voted.' );
         }
 
         $wpdb->insert(
@@ -492,7 +492,7 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $application || 'eligible_admin' !== $application['status'] ) {
-            return new WP_Error( 'vri_application', 'Application is not ready for the administrator decision.' );
+            return new WP_Error( 'vrcin_application', 'Application is not ready for the administrator decision.' );
         }
 
         if ( ! $approve ) {
@@ -514,14 +514,14 @@ final class VRI_Model {
         $existing_user = get_user_by( 'email', $email );
 
         if ( $existing_user && user_can( $existing_user, 'manage_options' ) ) {
-            return new WP_Error( 'vri_admin_email', 'This email belongs to an administrator. Assign the community manually.' );
+            return new WP_Error( 'vrcin_admin_email', 'This email belongs to an administrator. Assign the community manually.' );
         }
 
         $new_user = false;
         if ( $existing_user ) {
             $user_id = (int) $existing_user->ID;
             $user = new WP_User( $user_id );
-            $user->add_role( 'vri_community_owner' );
+            $user->add_role( 'vrcin_community_owner' );
         } else {
             $base = sanitize_user( sanitize_title( $application['community_name'] ), true );
             if ( '' === $base ) {
@@ -540,7 +540,7 @@ final class VRI_Model {
                     'user_email' => $email,
                     'display_name' => $application['community_name'],
                     'user_pass' => wp_generate_password( 32, true, true ),
-                    'role' => 'vri_community_owner',
+                    'role' => 'vrcin_community_owner',
                 )
             );
             if ( is_wp_error( $user_id ) ) {
@@ -577,7 +577,7 @@ final class VRI_Model {
             )
         );
         if ( ! $ok ) {
-            return new WP_Error( 'vri_db', 'Could not create the community.' );
+            return new WP_Error( 'vrcin_db', 'Could not create the community.' );
         }
 
         $wpdb->update(
@@ -606,7 +606,7 @@ final class VRI_Model {
         if ( ! $application ) {
             return;
         }
-        $settings = get_option( 'vri_form_settings', array() );
+        $settings = get_option( 'vrcin_form_settings', array() );
         $payload = self::decode( $application['payload'] );
         $lang = isset( $payload['_lang'] ) && 'en' === $payload['_lang'] ? 'en' : 'it';
         $subject = $approved
@@ -638,14 +638,14 @@ final class VRI_Model {
             $start = DateTimeImmutable::createFromFormat( 'Y-m-d\TH:i', sanitize_text_field( $data['start_local'] ?? '' ), $tz );
             $end = DateTimeImmutable::createFromFormat( 'Y-m-d\TH:i', sanitize_text_field( $data['end_local'] ?? '' ), $tz );
         } catch ( Exception $e ) {
-            return new WP_Error( 'vri_date', 'Invalid event date.' );
+            return new WP_Error( 'vrcin_date', 'Invalid event date.' );
         }
 
         if ( ! $start || ! $end || $end <= $start ) {
-            return new WP_Error( 'vri_date', 'End time must be after start time.' );
+            return new WP_Error( 'vrcin_date', 'End time must be after start time.' );
         }
         if ( $end->getTimestamp() - $start->getTimestamp() > DAY_IN_SECONDS ) {
-            return new WP_Error( 'vri_duration', 'Events may not exceed 24 hours.' );
+            return new WP_Error( 'vrcin_duration', 'Events may not exceed 24 hours.' );
         }
 
         $allowed_tags = array( 'gaming', 'drinking', 'world-exploration', 'dj-disco', 'hangout', 'age-gated', 'other' );
@@ -681,7 +681,7 @@ final class VRI_Model {
         global $wpdb;
         $community = self::get_community( $community_id );
         if ( ! $community || (int) $community['owner_user_id'] !== (int) $user_id ) {
-            return new WP_Error( 'vri_forbidden', 'Community not available.' );
+            return new WP_Error( 'vrcin_forbidden', 'Community not available.' );
         }
 
         $payload = self::normalize_event_payload( $data );
@@ -689,7 +689,7 @@ final class VRI_Model {
             return $payload;
         }
         if ( '' === $payload['title_it'] && '' === $payload['title_en'] ) {
-            return new WP_Error( 'vri_title', 'At least one event title is required.' );
+            return new WP_Error( 'vrcin_title', 'At least one event title is required.' );
         }
 
         $event_id = absint( $event_id );
@@ -700,7 +700,7 @@ final class VRI_Model {
                 ARRAY_A
             );
             if ( ! $event ) {
-                return new WP_Error( 'vri_event', 'Event not available.' );
+                return new WP_Error( 'vrcin_event', 'Event not available.' );
             }
         }
 
@@ -779,7 +779,7 @@ final class VRI_Model {
         global $wpdb;
         $community = self::get_owner_community( $user_id );
         if ( ! $community ) {
-            return new WP_Error( 'vri_forbidden', 'Community not available.' );
+            return new WP_Error( 'vrcin_forbidden', 'Community not available.' );
         }
         $event = $wpdb->get_row(
             $wpdb->prepare(
@@ -790,7 +790,7 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $event ) {
-            return new WP_Error( 'vri_event', 'Event not available.' );
+            return new WP_Error( 'vrcin_event', 'Event not available.' );
         }
         $wpdb->update(
             self::table( 'events' ),
@@ -899,7 +899,7 @@ final class VRI_Model {
         global $wpdb;
         $community = self::get_owner_community( $user_id );
         if ( ! $community ) {
-            return new WP_Error( 'vri_forbidden', 'Community not available.' );
+            return new WP_Error( 'vrcin_forbidden', 'Community not available.' );
         }
         $event = $wpdb->get_row(
             $wpdb->prepare(
@@ -910,7 +910,7 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $event || ! in_array( $event['pending_status'], array( 'blocked', 'slot_rejected' ), true ) ) {
-            return new WP_Error( 'vri_event', 'This event cannot request the date.' );
+            return new WP_Error( 'vrcin_event', 'This event cannot request the date.' );
         }
 
         $existing = $wpdb->get_var(
@@ -991,7 +991,7 @@ final class VRI_Model {
         global $wpdb;
         $vote = 'yes' === $vote ? 'yes' : ( 'no' === $vote ? 'no' : '' );
         if ( ! $vote ) {
-            return new WP_Error( 'vri_vote', 'Invalid vote.' );
+            return new WP_Error( 'vrcin_vote', 'Invalid vote.' );
         }
 
         $request = $wpdb->get_row(
@@ -999,12 +999,12 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $request || 'voting' !== $request['status'] ) {
-            return new WP_Error( 'vri_request', 'Request is not open.' );
+            return new WP_Error( 'vrcin_request', 'Request is not open.' );
         }
 
         $eligible = array_map( 'absint', self::decode( $request['eligible_voters'] ) );
         if ( ! in_array( absint( $user_id ), $eligible, true ) ) {
-            return new WP_Error( 'vri_forbidden', 'You cannot vote on this request.' );
+            return new WP_Error( 'vrcin_forbidden', 'You cannot vote on this request.' );
         }
         $exists = $wpdb->get_var(
             $wpdb->prepare(
@@ -1014,7 +1014,7 @@ final class VRI_Model {
             )
         );
         if ( $exists ) {
-            return new WP_Error( 'vri_voted', 'You have already voted.' );
+            return new WP_Error( 'vrcin_voted', 'You have already voted.' );
         }
 
         $wpdb->insert(
@@ -1139,7 +1139,7 @@ final class VRI_Model {
             ARRAY_A
         );
         if ( ! $event || 'admin_review' !== $event['pending_status'] || empty( $event['pending_payload'] ) ) {
-            return new WP_Error( 'vri_event', 'Event is not ready for moderation.' );
+            return new WP_Error( 'vrcin_event', 'Event is not ready for moderation.' );
         }
 
         if ( ! $approve ) {
@@ -1161,7 +1161,7 @@ final class VRI_Model {
         $required = array( 'start_at_utc', 'end_at_utc', 'title_it', 'title_en' );
         foreach ( $required as $key ) {
             if ( ! array_key_exists( $key, $payload ) ) {
-                return new WP_Error( 'vri_payload', 'Invalid pending event data.' );
+                return new WP_Error( 'vrcin_payload', 'Invalid pending event data.' );
             }
         }
 
