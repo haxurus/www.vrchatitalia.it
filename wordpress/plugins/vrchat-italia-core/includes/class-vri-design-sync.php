@@ -233,6 +233,11 @@ final class VRI_Design_Sync {
                 self::delete_tree( $stage );
                 return new WP_Error( 'vri_integrity', 'Unexpected size for ' . $relative );
             }
+            $blob_sha = sha1( 'blob ' . strlen( $body ) . "\0" . $body );
+            if ( ! empty( $info['sha'] ) && ! hash_equals( strtolower( $info['sha'] ), strtolower( $blob_sha ) ) ) {
+                self::delete_tree( $stage );
+                return new WP_Error( 'vri_integrity', 'Git blob hash mismatch for ' . $relative );
+            }
             if ( false === file_put_contents( $target, $body, LOCK_EX ) ) {
                 self::delete_tree( $stage );
                 return new WP_Error( 'vri_write', 'Could not write ' . $relative );
