@@ -2936,3 +2936,15 @@ html[data-theme="light"] .home-events-preview__week {
     margin-left: 0;
   }
 }
+
+
+.community-logo {
+  overflow: hidden;
+}
+
+.community-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
