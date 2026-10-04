@@ -1,11 +1,11 @@
 <?php
 defined( 'ABSPATH' ) || exit;
-$lang = vri_theme_lang();
+$lang = vrcin_theme_lang();
 $other = 'it' === $lang ? 'en' : 'it';
-$view = get_query_var( 'vri_view' ) ?: 'home';
-$home = vri_theme_url( 'home', $lang );
-$events = vri_theme_url( 'events', $lang );
-$dashboard = vri_theme_url( 'dashboard', $lang );
+$view = get_query_var( 'vrcin_view' ) ?: 'home';
+$home = vrcin_theme_url( 'home', $lang );
+$events = vrcin_theme_url( 'events', $lang );
+$dashboard = vrcin_theme_url( 'dashboard', $lang );
 ?><!DOCTYPE html>
 <html lang="<?php echo esc_attr( $lang ); ?>" data-color-scheme="dark">
 <head>
@@ -13,7 +13,7 @@ $dashboard = vri_theme_url( 'dashboard', $lang );
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090b12">
 <script>
-(function(){try{var t=localStorage.getItem('vri-theme')==='light'?'light':'dark';document.documentElement.setAttribute('data-color-scheme',t);if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+(function(){try{var t=localStorage.getItem('vrcin-theme')==='light'?'light':'dark';document.documentElement.setAttribute('data-color-scheme',t);if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
 </script>
 <?php wp_head(); ?>
 </head>
@@ -36,15 +36,15 @@ $dashboard = vri_theme_url( 'dashboard', $lang );
     </nav>
 
     <div class="language-switcher" aria-label="Language selector">
-      <a class="<?php echo 'it' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vri_theme_url( 'events', 'it' ) : ( 'dashboard' === $view ? vri_theme_url( 'dashboard', 'it' ) : vri_theme_url( 'home', 'it' ) ) ); ?>">IT</a>
-      <a class="<?php echo 'en' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vri_theme_url( 'events', 'en' ) : ( 'dashboard' === $view ? vri_theme_url( 'dashboard', 'en' ) : vri_theme_url( 'home', 'en' ) ) ); ?>">EN</a>
+      <a class="<?php echo 'it' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vrcin_theme_url( 'events', 'it' ) : ( 'dashboard' === $view ? vrcin_theme_url( 'dashboard', 'it' ) : vrcin_theme_url( 'home', 'it' ) ) ); ?>">IT</a>
+      <a class="<?php echo 'en' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vrcin_theme_url( 'events', 'en' ) : ( 'dashboard' === $view ? vrcin_theme_url( 'dashboard', 'en' ) : vrcin_theme_url( 'home', 'en' ) ) ); ?>">EN</a>
     </div>
 
     <button class="theme-toggle theme-toggle--desktop" type="button" aria-label="Theme">
       <span class="theme-toggle__sun" aria-hidden="true">☀</span><span class="theme-toggle__moon" aria-hidden="true">☾</span>
     </button>
 
-    <?php if ( is_user_logged_in() && current_user_can( 'vri_manage_community' ) ) : ?>
+    <?php if ( is_user_logged_in() && current_user_can( 'vrcin_manage_community' ) ) : ?>
       <a class="nav-cta" href="<?php echo esc_url( $dashboard ); ?>"><?php echo 'it' === $lang ? 'Dashboard' : 'Dashboard'; ?></a>
     <?php else : ?>
       <a class="nav-cta" href="<?php echo esc_url( $home . '#candidatura' ); ?>"><?php echo 'it' === $lang ? 'Aderisci al progetto' : 'Join the project'; ?></a>
@@ -61,8 +61,8 @@ $dashboard = vri_theme_url( 'dashboard', $lang );
     <a href="<?php echo esc_url( $home . '#gallery' ); ?>">Gallery</a>
     <a href="<?php echo esc_url( $home . '#candidatura' ); ?>"><?php echo 'it' === $lang ? 'Candidati' : 'Apply'; ?></a>
     <div class="mobile-language-switcher">
-      <a class="<?php echo 'it' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vri_theme_url( 'events', 'it' ) : ( 'dashboard' === $view ? vri_theme_url( 'dashboard', 'it' ) : vri_theme_url( 'home', 'it' ) ) ); ?>">Italiano</a>
-      <a class="<?php echo 'en' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vri_theme_url( 'events', 'en' ) : ( 'dashboard' === $view ? vri_theme_url( 'dashboard', 'en' ) : vri_theme_url( 'home', 'en' ) ) ); ?>">English</a>
+      <a class="<?php echo 'it' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vrcin_theme_url( 'events', 'it' ) : ( 'dashboard' === $view ? vrcin_theme_url( 'dashboard', 'it' ) : vrcin_theme_url( 'home', 'it' ) ) ); ?>">Italiano</a>
+      <a class="<?php echo 'en' === $lang ? 'is-active' : ''; ?>" href="<?php echo esc_url( 'events' === $view ? vrcin_theme_url( 'events', 'en' ) : ( 'dashboard' === $view ? vrcin_theme_url( 'dashboard', 'en' ) : vrcin_theme_url( 'home', 'en' ) ) ); ?>">English</a>
     </div>
     <button class="theme-toggle theme-toggle--mobile" type="button" aria-label="Theme"><span class="theme-toggle__icons"><span class="theme-toggle__sun">☀</span><span class="theme-toggle__moon">☾</span></span><span class="theme-toggle__label">Theme</span></button>
   </nav>

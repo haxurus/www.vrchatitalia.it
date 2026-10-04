@@ -1,10 +1,10 @@
 (() => {
   const calendarEl = document.getElementById('events-calendar');
-  if (!calendarEl || !window.FullCalendar || !window.VRI_EVENTS) return;
+  if (!calendarEl || !window.FullCalendar || !window.VRCIN_EVENTS) return;
 
-  const lang = VRI_EVENTS.lang === 'it' ? 'it' : 'en';
+  const lang = VRCIN_EVENTS.lang === 'it' ? 'it' : 'en';
   const locale = lang === 'it' ? 'it' : 'en-gb';
-  const endpoint = VRI_EVENTS.endpoint;
+  const endpoint = VRCIN_EVENTS.endpoint;
 
   const text = lang === 'it' ? {
     today:'Oggi', month:'Mese', week:'Settimana', day:'Giorno', list:'Agenda',
@@ -136,7 +136,7 @@
 
   calendar.render();
 
-  document.addEventListener('vri-theme-change', event => {
+  document.addEventListener('vrcin-theme-change', event => {
     if (event.detail?.theme) calendar.setOption('colorScheme', event.detail.theme);
   });
 

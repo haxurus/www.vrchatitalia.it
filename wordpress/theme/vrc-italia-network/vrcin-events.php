@@ -1,6 +1,6 @@
 <?php
 defined( 'ABSPATH' ) || exit;
-$lang = vri_theme_lang();
+$lang = vrcin_theme_lang();
 $it = 'it' === $lang;
 get_header();
 ?>

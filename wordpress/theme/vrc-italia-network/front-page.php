@@ -1,10 +1,10 @@
 <?php
 defined( 'ABSPATH' ) || exit;
-$lang = vri_theme_lang();
+$lang = vrcin_theme_lang();
 $it = 'it' === $lang;
-$communities = function_exists( 'vri_get_communities' ) ? vri_get_communities() : array();
-$banners = function_exists( 'vri_get_home_banners' ) ? vri_get_home_banners() : array();
-$gallery = function_exists( 'vri_get_home_gallery' ) ? vri_get_home_gallery() : array();
+$communities = function_exists( 'vrcin_get_communities' ) ? vrcin_get_communities() : array();
+$banners = function_exists( 'vrcin_get_home_banners' ) ? vrcin_get_home_banners() : array();
+$gallery = function_exists( 'vrcin_get_home_gallery' ) ? vrcin_get_home_gallery() : array();
 get_header();
 
 $slides = array_slice( $banners, 0, 4 );
@@ -107,11 +107,11 @@ while ( count( $slides ) < 4 ) { $slides[] = null; }
         <h2><?php echo esc_html( $it ? 'Scopri cosa succede su VRChat.' : "See what's happening on VRChat." ); ?></h2>
         <p><?php echo esc_html( $it ? 'Consulta il calendario condiviso per trovare gaming night, serate social, esplorazioni di mondi, DJ set e gli altri eventi organizzati dalle community aderenti.' : 'Browse the shared calendar to find gaming nights, social hangouts, world exploration, DJ sets and other events organized by participating communities.' ); ?></p>
         <div class="home-events-actions">
-          <a class="button button-primary" href="<?php echo esc_url( vri_theme_url( 'events', $lang ) ); ?>"><?php echo esc_html( $it ? 'Apri il calendario' : 'Open the calendar' ); ?></a>
+          <a class="button button-primary" href="<?php echo esc_url( vrcin_theme_url( 'events', $lang ) ); ?>"><?php echo esc_html( $it ? 'Apri il calendario' : 'Open the calendar' ); ?></a>
           <span><?php echo esc_html( $it ? 'Viste mese, settimana, giorno e agenda' : 'Month, week, day and agenda views' ); ?></span>
         </div>
       </div>
-      <a class="home-events-preview" href="<?php echo esc_url( vri_theme_url( 'events', $lang ) ); ?>" aria-label="Calendar">
+      <a class="home-events-preview" href="<?php echo esc_url( vrcin_theme_url( 'events', $lang ) ); ?>" aria-label="Calendar">
         <div class="home-events-preview__top"><span><?php echo esc_html( $it ? 'Calendario condiviso' : 'Shared calendar' ); ?></span><strong>VRC Italia Network</strong></div>
         <div class="home-events-preview__week" aria-hidden="true"><?php foreach ( $it ? array('LUN','MAR','MER','GIO','VEN','SAB','DOM') : array('MON','TUE','WED','THU','FRI','SAT','SUN') as $day ) : ?><span><?php echo esc_html( $day ); ?></span><?php endforeach; ?></div>
         <div class="home-events-preview__grid" aria-hidden="true">
@@ -166,11 +166,11 @@ while ( count( $slides ) < 4 ) { $slides[] = null; }
         </div>
         <div class="application-action">
           <div><strong><?php echo esc_html( $it ? 'Pronto a candidare la tua community?' : 'Ready to submit your community?' ); ?></strong><span><?php echo esc_html( $it ? 'Il modulo verrà aperto direttamente sul sito.' : 'The application form opens directly on the site.' ); ?></span></div>
-          <button class="button button-primary button-form" type="button" data-vri-open-application><?php echo esc_html( $it ? 'Compila il modulo ↗' : 'Open the form ↗' ); ?></button>
+          <button class="button button-primary button-form" type="button" data-vrcin-open-application><?php echo esc_html( $it ? 'Compila il modulo ↗' : 'Open the form ↗' ); ?></button>
         </div>
       </div>
     </div>
   </section>
 </main>
-<?php if ( function_exists( 'vri_render_application_popup' ) ) { vri_render_application_popup( $lang ); } ?>
+<?php if ( function_exists( 'vrcin_render_application_popup' ) ) { vrcin_render_application_popup( $lang ); } ?>
 <?php get_footer(); ?>

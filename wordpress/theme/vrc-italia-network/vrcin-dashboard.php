@@ -1,12 +1,12 @@
 <?php
 defined( 'ABSPATH' ) || exit;
-$lang = vri_theme_lang();
+$lang = vrcin_theme_lang();
 get_header();
 ?>
-<main class="vri-dashboard-page">
+<main class="vrcin-dashboard-page">
   <?php
-  if ( function_exists( 'vri_render_owner_dashboard' ) ) {
-      vri_render_owner_dashboard( $lang );
+  if ( function_exists( 'vrcin_render_owner_dashboard' ) ) {
+      vrcin_render_owner_dashboard( $lang );
   } else {
       echo '<div class="container"><p>VRC Italia Network Core is required.</p></div>';
   }
