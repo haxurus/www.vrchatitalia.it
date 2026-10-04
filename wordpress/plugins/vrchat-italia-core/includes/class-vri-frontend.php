@@ -70,9 +70,9 @@ final class VRI_Frontend {
             exit;
         }
 
-        $path = trim( (string) wp_parse_url( home_url( add_query_arg( array() ) ), PHP_URL_PATH ), '/' );
+        $home_path = trim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
         $request_path = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH ), '/' );
-        if ( '' === $request_path || $request_path === $path ) {
+        if ( $request_path === $home_path ) {
             if ( is_admin() || wp_doing_ajax() || defined( 'REST_REQUEST' ) ) {
                 return;
             }
@@ -434,10 +434,12 @@ final class VRI_Frontend {
         $intro = $settings[ 'intro_' . $lang ] ?? '';
         $submit = $settings[ 'submit_' . $lang ] ?? 'Submit';
         $style = sprintf(
-            '--vri-form-accent:%s;--vri-form-bg:%s;--vri-form-text:%s;--vri-form-radius:%dpx;--vri-form-width:%dpx;',
+            '--vri-form-accent:%s;--vri-form-bg-dark:%s;--vri-form-text-dark:%s;--vri-form-bg-light:%s;--vri-form-text-light:%s;--vri-form-radius:%dpx;--vri-form-width:%dpx;',
             esc_attr( $settings['accent'] ?? '#138a4b' ),
-            esc_attr( $settings['background'] ?? '#0d110e' ),
-            esc_attr( $settings['text'] ?? '#f4f1e8' ),
+            esc_attr( $settings['background_dark'] ?? '#0d110e' ),
+            esc_attr( $settings['text_dark'] ?? '#f4f1e8' ),
+            esc_attr( $settings['background_light'] ?? '#f4f1e8' ),
+            esc_attr( $settings['text_light'] ?? '#172019' ),
             absint( $settings['radius'] ?? 20 ),
             absint( $settings['max_width'] ?? 760 )
         );
