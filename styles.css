@@ -1689,7 +1689,7 @@ body.menu-open .menu-toggle::after { transform: translateY(-5.5px) rotate(-45deg
   opacity: .38;
 }
 
-#events-calendar .vri-calendar-event {
+#events-calendar .vrcin-calendar-event {
   border: 0 !important;
   border-left: 3px solid currentColor !important;
   border-radius: 6px !important;

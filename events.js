@@ -320,7 +320,7 @@
     title: event.title[lang],
     start: event.start,
     end: event.end,
-    classNames: ['vri-calendar-event', 'event-tag-' + (event.tags[0] || 'other')],
+    classNames: ['vrcin-calendar-event', 'event-tag-' + (event.tags[0] || 'other')],
     extendedProps: event
   });
 
@@ -366,7 +366,7 @@
 
   calendar.render();
 
-  document.addEventListener('vri-theme-change', event => {
+  document.addEventListener('vrcin-theme-change', event => {
     if (event.detail?.theme) {
       calendar.setOption('colorScheme', event.detail.theme);
     }

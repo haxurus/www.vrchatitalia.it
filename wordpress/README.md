@@ -4,8 +4,8 @@ This directory contains the WordPress implementation of VRC Italia Network.
 
 ## Architecture
 
-- `theme/vrchat-italia`: presentation layer only. It renders the public site, the events page and the owner dashboard shell.
-- `plugins/vrchat-italia-core`: data, permissions, moderation, applications, voting, events, owner dashboard and GitHub design synchronization.
+- `theme/vrc-italia-network`: presentation layer only. It renders the public site, the events page and the owner dashboard shell.
+- `plugins/vrc-italia-network-core`: data, permissions, moderation, applications, voting, events, owner dashboard and GitHub design synchronization.
 - `design`: the manually synchronized design source. The active WordPress site can fetch these assets from GitHub from **VRC Italia Network > Design Sync**.
 
 The public prototype in the repository root can remain useful for visual development, but WordPress runtime data never comes from static HTML.
@@ -19,8 +19,8 @@ Community data, accounts, votes, events and uploaded media remain in the WordPre
 ## Initial installation
 
 1. Back up the WordPress database and `wp-content`.
-2. Copy `theme/vrchat-italia` to `wp-content/themes/vrchat-italia`.
-3. Copy `plugins/vrchat-italia-core` to `wp-content/plugins/vrchat-italia-core`.
+2. Copy `theme/vrc-italia-network` to `wp-content/themes/vrc-italia-network`.
+3. Copy `plugins/vrc-italia-network-core` to `wp-content/plugins/vrc-italia-network-core`.
 4. Activate **VRC Italia Network Core**.
 5. Activate **VRC Italia Network** as the current theme.
 6. Open **Settings > Permalinks** once if the routes are not refreshed by activation.
@@ -50,7 +50,7 @@ Test on staging before production.
 
 ## Community owner permissions
 
-Owners are normal WordPress users with the `vri_community_owner` role, but they are redirected away from `/wp-admin/`. Their frontend dashboard lets them manage:
+Owners are normal WordPress users with the `vrcin_community_owner` role, but they are redirected away from `/wp-admin/`. Their frontend dashboard lets them manage:
 
 - account email, display name and password
 - community name
@@ -95,7 +95,7 @@ Text-only edits of an already approved event keep the event's existing slot mode
 
 Default source:
 
-- Repository: `haxurus/www.vrchatitalia.it`
+- Repository: `haxurus/www.vrcitalianetwork.it`
 - Branch: `main`
 - Path: `wordpress/design`
 
