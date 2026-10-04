@@ -105,6 +105,8 @@ function applyTheme(theme, persist = false) {
   const nextTheme = theme === 'light' ? 'light' : 'dark';
   document.documentElement.toggleAttribute('data-theme', nextTheme === 'light');
 
+  document.documentElement.setAttribute('data-color-scheme', nextTheme);
+
   if (nextTheme === 'light') {
     document.documentElement.setAttribute('data-theme', 'light');
   } else {
@@ -132,6 +134,10 @@ function applyTheme(theme, persist = false) {
   if (themeColorMeta) {
     themeColorMeta.setAttribute('content', isLight ? '#f4f1e8' : '#090b12');
   }
+
+  document.dispatchEvent(new CustomEvent('vri-theme-change', {
+    detail: { theme: nextTheme }
+  }));
 }
 
 applyTheme(getStoredTheme());
