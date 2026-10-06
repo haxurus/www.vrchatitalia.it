@@ -98,7 +98,11 @@
       const events = await response.json();
       lastRawEvents = Array.isArray(events) ? events : [];
       updateCommunityOptions(lastRawEvents);
-      success(applyFilters(lastRawEvents));
+      // FullCalendar v7 reads `className`; the REST API still sends v6-style `classNames`.
+      success(applyFilters(lastRawEvents).map(event => ({
+        ...event,
+        className: event.className || (event.classNames || []).join(' ')
+      })));
     } catch (error) {
       failure(error);
     }

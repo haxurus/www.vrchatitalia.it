@@ -11,7 +11,9 @@ $dashboard = vrcin_theme_url( 'dashboard', $lang );
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090b12">
+<meta name="theme-color" content="#07090e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script>
 (function(){try{var t=localStorage.getItem('vrcin-theme')==='light'?'light':'dark';document.documentElement.setAttribute('data-color-scheme',t);if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
 </script>

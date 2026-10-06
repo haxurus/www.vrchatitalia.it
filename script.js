@@ -27,8 +27,91 @@ if (mobileMenu) {
   });
 }
 
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || !body.classList.contains('menu-open')) return;
+  body.classList.remove('menu-open');
+  menuToggle?.setAttribute('aria-expanded', 'false');
+});
+
 if (formButton?.getAttribute('aria-disabled') === 'true') {
   formButton.addEventListener('click', event => event.preventDefault());
+}
+
+// Application popup rendered by VRC Italia Network Core (WordPress only).
+const applicationModal = document.getElementById('vrcin-application-modal');
+let applicationOpener = null;
+
+function closeApplicationModal() {
+  if (!applicationModal || applicationModal.hidden) return;
+  applicationModal.hidden = true;
+  body.style.overflow = '';
+  applicationOpener?.focus();
+}
+
+if (applicationModal) {
+  document.querySelectorAll('[data-vrcin-open-application]').forEach(button => {
+    button.addEventListener('click', () => {
+      applicationOpener = button;
+      applicationModal.hidden = false;
+      body.style.overflow = 'hidden';
+      applicationModal.querySelector('input:not([type="hidden"]), select, textarea')?.focus();
+    });
+  });
+
+  applicationModal.querySelectorAll('[data-vrcin-close]').forEach(button => {
+    button.addEventListener('click', closeApplicationModal);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeApplicationModal();
+  });
+}
+
+// Result of the application form / email verification redirect.
+const applicationStatus = new URLSearchParams(window.location.search).get('vrcin_application_status');
+
+if (applicationStatus) {
+  const isItalianPage = document.documentElement.lang === 'it';
+  const messages = {
+    'check-email': [
+      'Candidatura ricevuta. Controlla la tua email per confermare l\'indirizzo.',
+      'Application received. Check your inbox to confirm your email address.'
+    ],
+    verified: [
+      'Email confermata. La candidatura è ora in votazione tra le community.',
+      'Email confirmed. Your application is now being voted on by the communities.'
+    ],
+    missing: [
+      'Compila tutti i campi obbligatori e riprova.',
+      'Please fill in all required fields and try again.'
+    ],
+    'verify-error': [
+      'Il link di verifica non è valido o è scaduto.',
+      'The verification link is invalid or has expired.'
+    ]
+  };
+  const isSuccess = applicationStatus === 'check-email' || applicationStatus === 'verified';
+  const message = messages[applicationStatus] || [
+    'Non è stato possibile completare la richiesta (' + applicationStatus + ').',
+    'The request could not be completed (' + applicationStatus + ').'
+  ];
+
+  const toast = document.createElement('div');
+  toast.className = 'vrcin-toast' + (isSuccess ? '' : ' is-error');
+  toast.setAttribute('role', 'status');
+  const toastText = document.createElement('p');
+  toastText.textContent = message[isItalianPage ? 0 : 1];
+  const toastClose = document.createElement('button');
+  toastClose.type = 'button';
+  toastClose.setAttribute('aria-label', isItalianPage ? 'Chiudi' : 'Close');
+  toastClose.textContent = '×';
+  toastClose.addEventListener('click', () => toast.remove());
+  toast.append(toastText, toastClose);
+  body.appendChild(toast);
+
+  const cleanUrl = new URL(window.location.href);
+  cleanUrl.searchParams.delete('vrcin_application_status');
+  window.history.replaceState(null, '', cleanUrl.toString());
 }
 
 let scrollCueReady = false;
@@ -132,7 +215,7 @@ function applyTheme(theme, persist = false) {
   });
 
   if (themeColorMeta) {
-    themeColorMeta.setAttribute('content', isLight ? '#f4f1e8' : '#090b12');
+    themeColorMeta.setAttribute('content', isLight ? '#f6f3ec' : '#07090e');
   }
 
   document.dispatchEvent(new CustomEvent('vrcin-theme-change', {

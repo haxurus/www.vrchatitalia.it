@@ -315,14 +315,19 @@
     });
   };
 
-  const toCalendarEvent = event => ({
-    id: event.id,
-    title: event.title[lang],
-    start: event.start,
-    end: event.end,
-    classNames: ['vrcin-calendar-event', 'event-tag-' + (event.tags[0] || 'other')],
-    extendedProps: event
-  });
+  const toCalendarEvent = event => {
+    // FullCalendar v7 reads `className`; `classNames` is kept for v6 compatibility.
+    const classes = ['vrcin-calendar-event', 'event-tag-' + (event.tags[0] || 'other')];
+    return {
+      id: event.id,
+      title: event.title[lang],
+      start: event.start,
+      end: event.end,
+      className: classes.join(' '),
+      classNames: classes,
+      extendedProps: event
+    };
+  };
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     locale,
