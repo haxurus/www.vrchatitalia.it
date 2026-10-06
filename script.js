@@ -290,18 +290,22 @@ if (eventsPreview && finePointer) {
   eventsPreview.addEventListener('pointerleave', () => { eventsPreview.style.transform = restTransform(); });
 }
 
-// Hero: drifting tricolore particles
-const hero = document.querySelector('.hero');
-const particleCanvas = hero && document.createElement('canvas');
-const particleContext = particleCanvas?.getContext('2d');
+// Drifting tricolore particles: one field behind the whole page, a denser one in the hero
+const particleColors = {
+  dark: ['47, 212, 135', '246, 241, 228', '255, 95, 92'],
+  light: ['13, 138, 79', '150, 140, 118', '209, 58, 58']
+};
+const particlePointer = { x: 0, y: 0 };
 
-if (hero && particleContext) {
-  particleCanvas.className = 'hero-particles';
-  particleCanvas.setAttribute('aria-hidden', 'true');
-  hero.appendChild(particleCanvas);
+window.addEventListener('pointermove', event => {
+  particlePointer.x = event.clientX / window.innerWidth - 0.5;
+  particlePointer.y = event.clientY / window.innerHeight - 0.5;
+}, { passive: true });
 
-  const colors = ['47, 212, 135', '246, 241, 228', '255, 95, 92'];
-  const pointer = { x: 0, y: 0 };
+function createParticleField(canvas, { host = null, density = 16000, max = 90, min = 30, alpha = 1, forceDark = false } = {}) {
+  const context = canvas.getContext('2d');
+  if (!context) return null;
+
   let particles = [];
   let width = 0;
   let height = 0;
@@ -310,13 +314,13 @@ if (hero && particleContext) {
 
   const resize = () => {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    width = hero.clientWidth;
-    height = hero.clientHeight;
-    particleCanvas.width = width * ratio;
-    particleCanvas.height = height * ratio;
-    particleContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+    width = host ? host.clientWidth : window.innerWidth;
+    height = host ? host.clientHeight : window.innerHeight;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    const count = Math.round(Math.min(90, Math.max(30, width * height / 16000)));
+    const count = Math.round(Math.min(max, Math.max(min, width * height / density)));
     particles = Array.from({ length: count }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -324,14 +328,17 @@ if (hero && particleContext) {
       speed: Math.random() * 0.35 + 0.12,
       sway: Math.random() * Math.PI * 2,
       depth: Math.random() * 0.8 + 0.2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      alpha: Math.random() * 0.5 + 0.25
+      tone: Math.floor(Math.random() * 3),
+      alpha: (Math.random() * 0.5 + 0.25) * alpha
     }));
   };
 
   const draw = time => {
     if (!running) return;
-    particleContext.clearRect(0, 0, width, height);
+    context.clearRect(0, 0, width, height);
+    const palette = !forceDark && document.documentElement.hasAttribute('data-theme')
+      ? particleColors.light
+      : particleColors.dark;
 
     particles.forEach(p => {
       p.y -= p.speed;
@@ -341,44 +348,155 @@ if (hero && particleContext) {
         p.x = Math.random() * width;
       }
 
-      const x = p.x + Math.sin(p.sway) * 14 + pointer.x * 24 * p.depth;
-      const y = p.y + pointer.y * 16 * p.depth;
+      const x = p.x + Math.sin(p.sway) * 14 + particlePointer.x * 24 * p.depth;
+      const y = p.y + particlePointer.y * 16 * p.depth;
       const twinkle = 0.6 + Math.sin(time / 700 + p.sway * 3) * 0.4;
+      const color = palette[p.tone];
 
-      particleContext.beginPath();
-      particleContext.arc(x, y, p.radius * (0.6 + p.depth), 0, Math.PI * 2);
-      particleContext.fillStyle = `rgba(${p.color}, ${(p.alpha * twinkle).toFixed(3)})`;
-      particleContext.shadowColor = `rgba(${p.color}, .8)`;
-      particleContext.shadowBlur = 8 * p.depth;
-      particleContext.fill();
+      context.beginPath();
+      context.arc(x, y, p.radius * (0.6 + p.depth), 0, Math.PI * 2);
+      context.fillStyle = `rgba(${color}, ${(p.alpha * twinkle).toFixed(3)})`;
+      context.shadowColor = `rgba(${color}, .8)`;
+      context.shadowBlur = 8 * p.depth;
+      context.fill();
     });
 
     frame = requestAnimationFrame(draw);
   };
 
-  const start = () => {
-    if (running) return;
-    running = true;
-    frame = requestAnimationFrame(draw);
-  };
-
-  const stop = () => {
-    running = false;
-    cancelAnimationFrame(frame);
+  const field = {
+    start() {
+      if (running) return;
+      running = true;
+      frame = requestAnimationFrame(draw);
+    },
+    stop() {
+      running = false;
+      cancelAnimationFrame(frame);
+    }
   };
 
   resize();
   window.addEventListener('resize', resize);
+  return field;
+}
 
-  hero.addEventListener('pointermove', event => {
-    const rect = hero.getBoundingClientRect();
-    pointer.x = (event.clientX - rect.left) / rect.width - 0.5;
-    pointer.y = (event.clientY - rect.top) / rect.height - 0.5;
+const pageParticleCanvas = document.createElement('canvas');
+pageParticleCanvas.className = 'page-particles';
+pageParticleCanvas.setAttribute('aria-hidden', 'true');
+body.prepend(pageParticleCanvas);
+createParticleField(pageParticleCanvas, { density: 18000, max: 90, min: 30, alpha: 1 })?.start();
+
+const hero = document.querySelector('.hero');
+
+if (hero) {
+  const heroCanvas = document.createElement('canvas');
+  heroCanvas.className = 'hero-particles';
+  heroCanvas.setAttribute('aria-hidden', 'true');
+  hero.appendChild(heroCanvas);
+  const heroField = createParticleField(heroCanvas, { host: hero, forceDark: true });
+
+  if (heroField && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => (entry.isIntersecting ? heroField.start() : heroField.stop())).observe(hero);
+  } else {
+    heroField?.start();
+  }
+}
+
+// ---------- VRChat-style loading screen (first page of the session) ----------
+
+const root = document.documentElement;
+
+if (root.classList.contains('is-loading')) {
+  const it = root.lang === 'it';
+  const place = body.classList.contains('events-page')
+    ? (it ? 'Eventi' : 'Events')
+    : document.querySelector('.vrcin-dashboard-page')
+      ? 'Dashboard'
+      : 'Community Hub';
+
+  const steps = it
+    ? ['Connessione in corso...', 'Ricerca istanza...', 'Ingresso in corso...', 'Download del mondo...', 'Caricamento avatar...', 'Inizializzazione mondo...']
+    : ['Connecting...', 'Finding instance...', 'Joining...', 'Downloading World...', 'Loading Avatars...', 'Initializing World...'];
+
+  const loader = document.createElement('div');
+  loader.className = 'vrc-loader';
+  loader.setAttribute('role', 'status');
+  loader.setAttribute('aria-live', 'polite');
+  loader.innerHTML = `
+    <canvas class="vrc-loader__particles" aria-hidden="true"></canvas>
+    <div class="vrc-loader__stage">
+      <div class="vrc-loader__card" aria-hidden="true">
+        <span class="vrc-loader__room"></span>
+        <span class="vrc-loader__owner">VRC Italia Network</span>
+        <strong class="vrc-loader__world"></strong>
+        <span class="vrc-loader__flag"><i></i><i></i><i></i></span>
+      </div>
+      <div class="vrc-loader__status">
+        <span class="vrc-loader__text"></span>
+        <span class="vrc-loader__bar"><i></i></span>
+      </div>
+      <span class="vrc-loader__hint">${it ? 'Tocca per saltare' : 'Tap to skip'}</span>
+    </div>`;
+  loader.querySelector('.vrc-loader__world').textContent = place;
+  body.appendChild(loader);
+
+  const statusText = loader.querySelector('.vrc-loader__text');
+  const bar = loader.querySelector('.vrc-loader__bar i');
+  const loaderField = createParticleField(loader.querySelector('.vrc-loader__particles'), { host: loader, forceDark: true, density: 14000 });
+  loaderField?.start();
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stepTime = reduced ? 260 : 520;
+  const timers = [];
+  let finished = false;
+
+  const setStep = index => {
+    statusText.classList.remove('is-in');
+    void statusText.offsetWidth;
+    statusText.textContent = steps[index];
+    statusText.classList.add('is-in');
+    bar.style.transform = `scaleX(${(index + 1) / steps.length})`;
+  };
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    timers.forEach(clearTimeout);
+    bar.style.transform = 'scaleX(1)';
+    loader.classList.add('is-leaving');
+    root.classList.remove('is-loading');
+    window.setTimeout(() => {
+      loaderField?.stop();
+      loader.remove();
+    }, reduced ? 250 : 1100);
+  };
+
+  // "Downloading World... NN%" counts up while that step is visible
+  const downloadIndex = 3;
+  steps.forEach((_, index) => {
+    timers.push(window.setTimeout(() => {
+      setStep(index);
+      if (index === downloadIndex) {
+        let percent = 0;
+        const tick = () => {
+          if (finished || statusText.textContent.indexOf(steps[downloadIndex]) !== 0) return;
+          percent = Math.min(100, percent + 7 + Math.round(Math.random() * 12));
+          statusText.textContent = steps[downloadIndex] + ' ' + percent + '%';
+          if (percent < 100) timers.push(window.setTimeout(tick, stepTime / 8));
+        };
+        tick();
+      }
+    }, index * stepTime));
   });
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop())).observe(hero);
-  } else {
-    start();
-  }
+  timers.push(window.setTimeout(finish, steps.length * stepTime + 250));
+  loader.addEventListener('click', finish);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') finish();
+  });
+
+  try {
+    sessionStorage.setItem('vrcin-loaded', '1');
+  } catch (error) {}
 }

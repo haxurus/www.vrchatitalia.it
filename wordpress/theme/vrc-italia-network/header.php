@@ -16,6 +16,7 @@ $dashboard = vrcin_theme_url( 'dashboard', $lang );
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script>
 (function(){try{var t=localStorage.getItem('vrcin-theme')==='light'?'light':'dark';document.documentElement.setAttribute('data-color-scheme',t);if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+(function(){try{if(sessionStorage.getItem('vrcin-loaded'))return;var r=document.documentElement;r.classList.add('is-loading');setTimeout(function(){r.classList.remove('is-loading');},8000);}catch(e){}})();
 </script>
 <?php wp_head(); ?>
 </head>

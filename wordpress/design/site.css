@@ -2646,6 +2646,216 @@ html[data-theme="light"] .vrcin-dashboard-card::before {
 .events-hero p { animation: heroIn 1s var(--ease) both .25s; }
 .events-hero__meta { animation: heroIn 1s var(--ease) both .4s; }
 
+/* Page-wide particle field (canvas injected by site.js) */
+.page-particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- VRChat-style loading screen ---------- */
+
+html.is-loading body { visibility: hidden; overflow: hidden; }
+html.is-loading .vrc-loader { visibility: visible; }
+
+html.is-loading body > :not(.vrc-loader),
+html.is-loading body > :not(.vrc-loader) * { animation-play-state: paused !important; }
+
+.vrc-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #f3f1ea;
+  background:
+    radial-gradient(70% 60% at 50% 40%, #0f2a2c 0%, transparent 70%),
+    radial-gradient(40% 40% at 20% 80%, rgba(35, 183, 116, .12), transparent 70%),
+    radial-gradient(40% 40% at 85% 20%, rgba(239, 83, 80, .1), transparent 70%),
+    #061418;
+  cursor: pointer;
+  transform-origin: 50% 50%;
+}
+
+.vrc-loader__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vrc-loader__stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 28px;
+  width: min(calc(100% - 48px), 440px);
+  animation: loaderIn .6s var(--ease) both;
+}
+
+@keyframes loaderIn {
+  from { opacity: 0; transform: translateY(14px) scale(.97); }
+}
+
+.vrc-loader__card {
+  position: relative;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 6px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 28px;
+  background:
+    radial-gradient(70% 60% at 50% 45%, rgba(255, 255, 255, .14), transparent 70%),
+    linear-gradient(160deg, #1e8f6a, #136a5a 55%, #0d4a45);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .8), inset 0 0 0 1px rgba(255, 255, 255, .12);
+  text-align: center;
+}
+
+/* the "box" room: grid walls + floor seen in perspective */
+.vrc-loader__room {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, .14) 1px, transparent 1px) 0 0 / 100% 12.5%,
+    linear-gradient(90deg, rgba(255, 255, 255, .14) 1px, transparent 1px) 0 0 / 10% 100%;
+  -webkit-mask-image: radial-gradient(75% 70% at 50% 45%, transparent 30%, #000 85%);
+  mask-image: radial-gradient(75% 70% at 50% 45%, transparent 30%, #000 85%);
+}
+
+.vrc-loader__room::after {
+  content: "";
+  position: absolute;
+  left: -30%;
+  right: -30%;
+  bottom: -10%;
+  height: 48%;
+  background:
+    linear-gradient(rgba(255, 255, 255, .1) 1px, transparent 1px) 0 0 / 100% 14%,
+    linear-gradient(90deg, rgba(255, 255, 255, .1) 1px, transparent 1px) 0 0 / 6% 100%;
+  transform: perspective(240px) rotateX(58deg);
+  transform-origin: top;
+  animation: floorMove 3s linear infinite;
+}
+
+@keyframes floorMove { to { background-position: 0 14%, 0 0; } }
+
+.vrc-loader__owner,
+.vrc-loader__world {
+  position: relative;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .25), 0 0 18px rgba(0, 0, 0, .25);
+}
+
+.vrc-loader__owner {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 3.4vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  opacity: .92;
+}
+
+.vrc-loader__world {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 6vw, 2.3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+
+.vrc-loader__flag {
+  position: relative;
+  display: flex;
+  gap: 3px;
+  margin-top: 10px;
+}
+
+.vrc-loader__flag i {
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+  background: #23b774;
+  animation: flagBlink 1.4s ease-in-out infinite;
+}
+
+.vrc-loader__flag i:nth-child(2) { background: #f4efe3; animation-delay: .2s; }
+.vrc-loader__flag i:nth-child(3) { background: #ef5350; animation-delay: .4s; }
+
+@keyframes flagBlink { 50% { opacity: .35; transform: scaleX(.7); } }
+
+.vrc-loader__status {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 74px;
+  padding: 18px 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 14px;
+  background: rgba(4, 14, 18, .85);
+}
+
+.vrc-loader__text {
+  font-family: var(--font-body);
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.vrc-loader__text.is-in { animation: statusIn .35s var(--ease); }
+
+@keyframes statusIn { from { opacity: 0; transform: translateY(6px); } }
+
+.vrc-loader__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, .06);
+}
+
+.vrc-loader__bar i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #23b774 0 33.33%, #f4efe3 33.33% 66.66%, #ef5350 66.66%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .5s var(--ease);
+}
+
+.vrc-loader__hint {
+  color: rgba(243, 241, 234, .4);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+/* Exit: the content fades, the void tilts away like VRChat entering a world */
+.vrc-loader.is-leaving { pointer-events: none; animation: loaderOut 1.05s cubic-bezier(.6, 0, .3, 1) forwards; }
+.vrc-loader.is-leaving .vrc-loader__stage { animation: stageOut .35s ease forwards; }
+
+@keyframes stageOut { to { opacity: 0; transform: scale(.96); } }
+
+@keyframes loaderOut {
+  0% { border-radius: 0; transform: none; opacity: 1; }
+  45% { border-radius: 56px; transform: perspective(1200px) rotateZ(-2deg) rotateY(6deg) scale(.94); opacity: 1; }
+  100% { border-radius: 80px; transform: perspective(1200px) rotateZ(-3deg) rotateY(10deg) scale(1.15); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vrc-loader.is-leaving { animation: fadeOutLoader .25s ease forwards; }
+  @keyframes fadeOutLoader { to { opacity: 0; } }
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1140px) {

@@ -22,6 +22,16 @@
       }
     })();
   </script>
+  <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem('vrcin-loaded')) return;
+        var root = document.documentElement;
+        root.classList.add('is-loading');
+        window.setTimeout(function () { root.classList.remove('is-loading'); }, 8000);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="canonical" href="./" />
@@ -32,7 +42,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/skeleton.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/themes/classic/theme.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/themes/classic/palette.css" />
-  <link rel="stylesheet" href="../../styles.css?v=20261006-motion" />
+  <link rel="stylesheet" href="../../styles.css?v=20261006-loader" />
 </head>
 
 <body class="events-page">
@@ -226,7 +236,7 @@
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/all/global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/themes/classic/global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@7.1.0/locales-all/global.js"></script>
-  <script src="../../script.js?v=20261006-motion"></script>
-  <script src="../../events.js?v=20261006-motion"></script>
+  <script src="../../script.js?v=20261006-loader"></script>
+  <script src="../../events.js?v=20261006-loader"></script>
 </body>
 </html>
