@@ -134,9 +134,13 @@ if (scrollIndicator) {
   window.addEventListener('scroll', updateScrollCue, { passive: true });
 }
 
-const revealTargets = document.querySelectorAll(
-  '.project-layout, .section-head, .community-card, .gallery-heading, .application-panel'
-);
+const revealTargets = document.querySelectorAll([
+  '.project-layout > div:first-child', '.project-copy', '.national-group',
+  '.section-head', '.community-card', '.home-events-copy', '.home-events-preview',
+  '.gallery-heading', '.photo-marquee', '.application-intro', '.requirement',
+  '.application-action', '.footer-shell', '.events-toolbar-panel', '.events-legend',
+  '.calendar-shell', '.vrcin-dashboard-card'
+].join(', '));
 
 if ('IntersectionObserver' in window) {
   revealTargets.forEach(element => element.classList.add('reveal'));
@@ -231,3 +235,150 @@ themeToggles.forEach(toggle => {
     applyTheme(currentTheme === 'light' ? 'dark' : 'light', true);
   });
 });
+
+
+// ---------- Motion ----------
+
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+// Tricolore scroll progress bar
+const scrollProgress = document.createElement('div');
+scrollProgress.className = 'scroll-progress';
+scrollProgress.setAttribute('aria-hidden', 'true');
+body.appendChild(scrollProgress);
+
+let progressFrame = 0;
+const updateProgress = () => {
+  progressFrame = 0;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  scrollProgress.style.setProperty('--progress', max > 0 ? String(window.scrollY / max) : '0');
+};
+window.addEventListener('scroll', () => {
+  if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
+}, { passive: true });
+updateProgress();
+
+// Pointer spotlight on cards
+if (finePointer) {
+  document.querySelectorAll('.community-card, .requirement, .national-group, .vrcin-dashboard-card').forEach(card => {
+    card.addEventListener('pointermove', event => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (event.clientX - rect.left) + 'px');
+      card.style.setProperty('--my', (event.clientY - rect.top) + 'px');
+    });
+  });
+}
+
+// Calendar teaser tilts toward the pointer
+const eventsPreview = document.querySelector('.home-events-preview');
+
+if (eventsPreview && finePointer) {
+  const wideScreen = window.matchMedia('(min-width: 961px)');
+  const restTransform = () => wideScreen.matches ? 'perspective(1400px) rotateY(-6deg) rotateX(2deg)' : '';
+
+  eventsPreview.style.transform = restTransform();
+  wideScreen.addEventListener('change', () => { eventsPreview.style.transform = restTransform(); });
+
+  eventsPreview.addEventListener('pointermove', event => {
+    if (!wideScreen.matches) return;
+    const rect = eventsPreview.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    eventsPreview.style.transform =
+      `perspective(1400px) rotateY(${(x * 10).toFixed(2)}deg) rotateX(${(-y * 8).toFixed(2)}deg) translateY(-4px)`;
+  });
+  eventsPreview.addEventListener('pointerleave', () => { eventsPreview.style.transform = restTransform(); });
+}
+
+// Hero: drifting tricolore particles
+const hero = document.querySelector('.hero');
+const particleCanvas = hero && document.createElement('canvas');
+const particleContext = particleCanvas?.getContext('2d');
+
+if (hero && particleContext) {
+  particleCanvas.className = 'hero-particles';
+  particleCanvas.setAttribute('aria-hidden', 'true');
+  hero.appendChild(particleCanvas);
+
+  const colors = ['47, 212, 135', '246, 241, 228', '255, 95, 92'];
+  const pointer = { x: 0, y: 0 };
+  let particles = [];
+  let width = 0;
+  let height = 0;
+  let running = false;
+  let frame = 0;
+
+  const resize = () => {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = hero.clientWidth;
+    height = hero.clientHeight;
+    particleCanvas.width = width * ratio;
+    particleCanvas.height = height * ratio;
+    particleContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    const count = Math.round(Math.min(90, Math.max(30, width * height / 16000)));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 1.8 + 0.6,
+      speed: Math.random() * 0.35 + 0.12,
+      sway: Math.random() * Math.PI * 2,
+      depth: Math.random() * 0.8 + 0.2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: Math.random() * 0.5 + 0.25
+    }));
+  };
+
+  const draw = time => {
+    if (!running) return;
+    particleContext.clearRect(0, 0, width, height);
+
+    particles.forEach(p => {
+      p.y -= p.speed;
+      p.sway += 0.01;
+      if (p.y < -10) {
+        p.y = height + 10;
+        p.x = Math.random() * width;
+      }
+
+      const x = p.x + Math.sin(p.sway) * 14 + pointer.x * 24 * p.depth;
+      const y = p.y + pointer.y * 16 * p.depth;
+      const twinkle = 0.6 + Math.sin(time / 700 + p.sway * 3) * 0.4;
+
+      particleContext.beginPath();
+      particleContext.arc(x, y, p.radius * (0.6 + p.depth), 0, Math.PI * 2);
+      particleContext.fillStyle = `rgba(${p.color}, ${(p.alpha * twinkle).toFixed(3)})`;
+      particleContext.shadowColor = `rgba(${p.color}, .8)`;
+      particleContext.shadowBlur = 8 * p.depth;
+      particleContext.fill();
+    });
+
+    frame = requestAnimationFrame(draw);
+  };
+
+  const start = () => {
+    if (running) return;
+    running = true;
+    frame = requestAnimationFrame(draw);
+  };
+
+  const stop = () => {
+    running = false;
+    cancelAnimationFrame(frame);
+  };
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  hero.addEventListener('pointermove', event => {
+    const rect = hero.getBoundingClientRect();
+    pointer.x = (event.clientX - rect.left) / rect.width - 0.5;
+    pointer.y = (event.clientY - rect.top) / rect.height - 0.5;
+  });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop())).observe(hero);
+  } else {
+    start();
+  }
+}
